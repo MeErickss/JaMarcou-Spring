@@ -1,0 +1,81 @@
+package com.example.demo.service;
+
+import com.example.demo.dto.LoginDto;
+import com.example.demo.model.Estabelecimentos;
+import com.example.demo.model.Usuarios;
+import com.example.demo.repository.EstabelecimentosRepository;
+import com.example.demo.repository.UsuariosRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UsuariosService {
+
+    @Autowired
+    private UsuariosRepository usuariosRepository;
+
+    @Autowired
+    private EstabelecimentosRepository estabelecimentosRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    // Listar todos
+    public List<Usuarios> listAllUsuarios() {
+        return usuariosRepository.findAll();
+    }
+
+    // Buscar por ID (opcional, mas útil)
+    public Optional<Usuarios> getUsuarioById(Long id) {
+        return usuariosRepository.findById(id);
+    }
+
+    public void criarUsuario(LocalDateTime dataNascimento, String cpf, Long estabelecimentoId,
+                             String linkImg, String nome, String senha, String sobrenome, String status, String email) {
+
+        Estabelecimentos e = estabelecimentosRepository.getReferenceById(estabelecimentoId);
+
+        String senhaCriptografada = passwordEncoder.encode(senha);
+
+        Usuarios usuario = new Usuarios();
+        usuario.setCpf(cpf);
+        usuario.setStatusUsuario(status);
+        usuario.setNome(nome);
+        usuario.setEstabelecimento(e);
+        usuario.setSobrenome(sobrenome);
+        usuario.setSenha(senhaCriptografada);
+        usuario.setDataNascimento(dataNascimento);
+        usuario.setLinkImagem(linkImg);
+        usuario.setEmail(email);
+        usuario.setServicos(new ArrayList<>());
+        usuariosRepository.save(usuario);
+    }
+
+    public String validarLogin(LoginDto loginDto) {
+        // Busca o usuário pelo email
+        Usuarios usuario = usuariosRepository.findByEmail(loginDto.getEmail());
+
+        if (usuario == null) {
+            return null; // Usuário não encontrado
+        }
+
+        boolean senhaValida = passwordEncoder.matches(loginDto.getSenha(), usuario.getSenha());
+
+        if (!senhaValida) {
+            return null; // Senha inválida
+        }
+
+        // Gera o token JWT
+        String token = JwtService.gerarToken(usuario.getEmail());
+        return token;
+    }
+
+
+
+}
