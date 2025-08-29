@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -38,9 +40,9 @@ public class Usuarios {
     @Column(nullable = false)
     private String statusUsuario;
 
-    @ManyToOne
-    @JoinColumn(name = "estabelecimentos_id", nullable = false)
-    private Estabelecimentos estabelecimento;
+    @ManyToMany(mappedBy = "usuarios")
+    @JsonIgnore
+    private List<Estabelecimentos> estabelecimentos = new ArrayList<>();
 
     @ManyToMany(mappedBy = "usuarios")
     @JsonBackReference
@@ -49,7 +51,7 @@ public class Usuarios {
 
     public Usuarios() {}
 
-    public Usuarios(Long id, String nome, String email, String sobrenome, String cpf, String senha, List<Servicos> servicos ,LocalDateTime dataNascimento, String linkImagem, String statusUsuario, Estabelecimentos estabelecimento) {
+    public Usuarios(Long id, String nome, String email, List<Estabelecimentos> estabelecimentos, String sobrenome, String cpf, String senha, List<Servicos> servicos ,LocalDateTime dataNascimento, String linkImagem, String statusUsuario, Estabelecimentos estabelecimento) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -58,7 +60,7 @@ public class Usuarios {
         this.dataNascimento = dataNascimento;
         this.linkImagem = linkImagem;
         this.statusUsuario = statusUsuario;
-        this.estabelecimento = estabelecimento;
+        this.estabelecimentos = estabelecimentos;
         this.servicos = servicos;
         this.email = email;
     }
@@ -71,7 +73,7 @@ public class Usuarios {
     public String getSenha() {return senha;}
     public String getSobrenome() {return sobrenome;}
     public String getStatusUsuario() {return statusUsuario;}
-    public Estabelecimentos getEstabelecimento() { return estabelecimento; }
+    public List<Estabelecimentos> getEstabelecimento() { return estabelecimentos; }
     public List<Servicos> getServicos() {return servicos;}
     public String getEmail() {return email;}
 
@@ -82,7 +84,7 @@ public class Usuarios {
     public void setSenha(String senha) {this.senha = senha;}
     public void setSobrenome(String sobrenome) {this.sobrenome = sobrenome;}
     public void setStatusUsuario(String statusUsuario) {this.statusUsuario = statusUsuario;}
-    public void setEstabelecimento(Estabelecimentos estabelecimento) { this.estabelecimento = estabelecimento; }
+    public void setEstabelecimento(List<Estabelecimentos> estabelecimentos) { this.estabelecimentos = estabelecimentos; }
     public void setServicos(List<Servicos> servicos) {this.servicos = servicos;}
     public void setEmail(String email) {this.email = email;}
 }

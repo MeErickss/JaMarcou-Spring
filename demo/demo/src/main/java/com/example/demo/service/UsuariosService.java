@@ -47,15 +47,22 @@ public class UsuariosService {
         usuario.setCpf(cpf);
         usuario.setStatusUsuario(status);
         usuario.setNome(nome);
-        usuario.setEstabelecimento(e);
         usuario.setSobrenome(sobrenome);
         usuario.setSenha(senhaCriptografada);
         usuario.setDataNascimento(dataNascimento);
         usuario.setLinkImagem(linkImg);
         usuario.setEmail(email);
         usuario.setServicos(new ArrayList<>());
+
+        e.getUsuarios().add(usuario);
+
+        usuario.setEstabelecimento(new ArrayList<>());
+        usuario.getEstabelecimento().add(e);
+
         usuariosRepository.save(usuario);
+        estabelecimentosRepository.save(e);
     }
+
 
     public String validarLogin(LoginDto loginDto) {
         // Busca o usuário pelo email
