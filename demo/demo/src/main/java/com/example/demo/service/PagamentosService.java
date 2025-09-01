@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.PagamentoDto;
 import com.example.demo.model.Categorias;
 import com.example.demo.model.Horarios;
 import com.example.demo.model.Pagamentos;
@@ -33,7 +34,7 @@ public class PagamentosService {
         return pagamentosRepository.findById(id);
     }
 
-    public void criarPagamentos(FormaPagamento formaPagamento, Long horarioId, TipoPagamento tipoPagamento, Float valor, LocalDateTime data, String registro){
+    public void cadastrarPagamentos(FormaPagamento formaPagamento, Long horarioId, TipoPagamento tipoPagamento, Float valor, LocalDateTime data, String registro){
 
         Horarios h = horariosRepository.getReferenceById(horarioId);
 
@@ -45,5 +46,39 @@ public class PagamentosService {
         pagamento.setRegistro(registro);
         pagamento.setTipoPagamento(tipoPagamento);
         pagamentosRepository.save(pagamento);
+    }
+
+    public void cadastrarPagamentos(PagamentoDto dto){
+
+        Horarios h = horariosRepository.getReferenceById(dto.getHorario());
+
+        Pagamentos pagamento = new Pagamentos();
+        pagamento.setData(dto.getData());
+        pagamento.setFormaPagamento(dto.getFormaPagamento());
+        pagamento.setHorario(h);
+        pagamento.setValor(dto.getValor());
+        pagamento.setRegistro(dto.getRegistro());
+        pagamento.setTipoPagamento(dto.getTipoPagamento());
+        pagamentosRepository.save(pagamento);
+    }
+
+    public void atualizarPagamentos(PagamentoDto dto){
+
+        Horarios h = horariosRepository.getReferenceById(dto.getHorario());
+
+        Pagamentos pagamento = pagamentosRepository.getReferenceById(dto.getId());
+
+        pagamento.setData(dto.getData());
+        pagamento.setFormaPagamento(dto.getFormaPagamento());
+        pagamento.setHorario(h);
+        pagamento.setValor(dto.getValor());
+        pagamento.setRegistro(dto.getRegistro());
+        pagamento.setTipoPagamento(dto.getTipoPagamento());
+        pagamentosRepository.save(pagamento);
+    }
+
+    public void deletarPagamentos(Long id){
+        Pagamentos p = pagamentosRepository.getReferenceById(id);
+        pagamentosRepository.delete(p);
     }
 }

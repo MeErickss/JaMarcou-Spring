@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.AvaliacoesDto;
 import com.example.demo.model.Avaliacoes;
 import com.example.demo.model.Estabelecimentos;
 import com.example.demo.model.Horarios;
@@ -34,16 +35,48 @@ public class AvaliacoesService {
         return avaliacoesRepository.findById(id);
     }
 
-    public void criarAvaliacao(Float nota, Long estabelecimentoId, Long horarioId){
+    public void cadastrarAvaliacao(Float nota, Long estabelecimentoId, Long horarioId){
 
         Horarios h = horariosRepository.getReferenceById(horarioId);
 
-        Estabelecimentos e = estabelecimentosRepository.getReferenceById(horarioId);
+        Estabelecimentos e = estabelecimentosRepository.getReferenceById(estabelecimentoId);
 
         Avaliacoes avaliacao = new Avaliacoes();
         avaliacao.setEstabelecimento(e);
         avaliacao.setNota(nota);
         avaliacao.setHorario(h);
         avaliacoesRepository.save(avaliacao);
+    }
+
+    public void cadastrarAvaliacao(AvaliacoesDto dto){
+
+        Horarios h = horariosRepository.getReferenceById(dto.getHorarioId());
+
+        Estabelecimentos e = estabelecimentosRepository.getReferenceById(dto.getEstabelecimentoId());
+
+        Avaliacoes avaliacao = new Avaliacoes();
+        avaliacao.setEstabelecimento(e);
+        avaliacao.setNota(dto.getNota());
+        avaliacao.setHorario(h);
+        avaliacoesRepository.save(avaliacao);
+    }
+
+    public void atualizarAvaliacao(AvaliacoesDto dto){
+
+        Avaliacoes a = avaliacoesRepository.getReferenceById(dto.getId());
+
+        Horarios h = horariosRepository.getReferenceById(dto.getHorarioId());
+
+        Estabelecimentos e = estabelecimentosRepository.getReferenceById(dto.getEstabelecimentoId());
+
+        a.setEstabelecimento(e);
+        a.setNota(dto.getNota());
+        a.setHorario(h);
+        avaliacoesRepository.save(a);
+    }
+
+    public void deletarAvaliacao(Long id){
+        Avaliacoes a = avaliacoesRepository.getReferenceById(id);
+        avaliacoesRepository.delete(a);
     }
 }

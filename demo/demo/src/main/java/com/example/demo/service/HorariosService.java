@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.HorariosDto;
 import com.example.demo.model.*;
 import com.example.demo.model.enumeration.StatusHorario;
 import com.example.demo.repository.EstabelecimentosRepository;
@@ -38,7 +39,7 @@ public class HorariosService {
         return horariosRepository.findById(id);
     }
 
-    public void criarHorario(StatusHorario statusHorario, LocalDateTime dataInicio, LocalDateTime dataFim, LocalDateTime dataMarcacao, Long estabelecimentoId, Long usuarioId){
+    public void cadastrarHorario(StatusHorario statusHorario, LocalDateTime dataInicio, LocalDateTime dataFim, LocalDateTime dataMarcacao, Long estabelecimentoId, Long usuarioId){
 
         Estabelecimentos e = estabelecimentosRepository.getReferenceById(estabelecimentoId);
 
@@ -53,5 +54,44 @@ public class HorariosService {
         horario.setEstabelecimento(e);
         horariosRepository.save(horario);
 
+    }
+
+    public void cadastrarHorario(HorariosDto dto){
+
+        Estabelecimentos e = estabelecimentosRepository.getReferenceById(dto.getEstabelecimentoId());
+
+        Usuarios u = usuariosRepository.getReferenceById(dto.getUsuarioId());
+
+        Horarios horario = new Horarios();
+        horario.setStatusHorario(dto.getStatusHorario());
+        horario.setDataFim(dto.getDataFim());
+        horario.setUsuario(u);
+        horario.setDataMarcacao(dto.getDataMarcacao());
+        horario.setDataInicio(dto.getDataInicio());
+        horario.setEstabelecimento(e);
+        horariosRepository.save(horario);
+
+    }
+
+    public void atualizarHorario(HorariosDto dto){
+
+        Horarios h = horariosRepository.getReferenceById(dto.getId());
+
+        Estabelecimentos e = estabelecimentosRepository.getReferenceById(dto.getEstabelecimentoId());
+
+        Usuarios u = usuariosRepository.getReferenceById(dto.getUsuarioId());
+
+        h.setStatusHorario(dto.getStatusHorario());
+        h.setDataFim(dto.getDataFim());
+        h.setUsuario(u);
+        h.setDataMarcacao(dto.getDataMarcacao());
+        h.setDataInicio(dto.getDataInicio());
+        h.setEstabelecimento(e);
+        horariosRepository.save(h);
+    }
+
+    public void deletarHorario(Long id){
+        Horarios h = horariosRepository.getReferenceById(id);
+        horariosRepository.delete(h);
     }
 }

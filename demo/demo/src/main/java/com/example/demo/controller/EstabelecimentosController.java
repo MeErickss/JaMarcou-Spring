@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CategoriasDto;
+import com.example.demo.dto.EstabelecimentosDto;
 import com.example.demo.model.Estabelecimentos;
 import com.example.demo.repository.EstabelecimentosRepository;
+import com.example.demo.service.EstabelecimentosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +19,23 @@ public class EstabelecimentosController {
     @Autowired
     private EstabelecimentosRepository estabelecimentosRepository;
 
+    @Autowired
+    private EstabelecimentosService estabelecimentosService;
+
     // 🔹 Listar todos os estabelecimentos
     @GetMapping
     public List<Estabelecimentos> listarTodos() {
         return estabelecimentosRepository.findAll();
+    }
+
+    @PostMapping
+    public void cadastrarEstabelecimentos(@RequestParam EstabelecimentosDto dto) {
+        estabelecimentosService.cadastrarEstabelecimento(dto);
+    }
+
+    @PutMapping
+    public void atualizarEstabelecimentos(@RequestParam EstabelecimentosDto dto){
+        estabelecimentosService.atualizarEstabelecimento(dto);
     }
 
     // 🔹 Buscar estabelecimento por ID
@@ -27,6 +43,12 @@ public class EstabelecimentosController {
     public ResponseEntity<Estabelecimentos> buscarPorId(@PathVariable Long id) {
         Optional<Estabelecimentos> estabelecimento = estabelecimentosRepository.findById(id);
         return estabelecimento.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/relacoes")
+    public ResponseEntity<List<Estabelecimentos>> listarRelacoesEstabelecimentos(){
+            List<Estabelecimentos> estabelecimento = estabelecimentosRepository.findAllWithUsuarios();
+        return ResponseEntity.ok(estabelecimento);
     }
 
 

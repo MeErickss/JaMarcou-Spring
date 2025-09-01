@@ -1,8 +1,7 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.Usuarios;
-
 import java.util.List;
+import java.util.Set;
 
 public class ServicosDto {
     private Long id;
@@ -11,11 +10,11 @@ public class ServicosDto {
     private String descricao;
     private Long quantidadeDisponivel;
     private EstabelecimentosDto estabelecimento;
-    private List<UsuariosDto> usuarios;
+    private Set<UsuariosDto> usuarios;
 
     public ServicosDto() {}
 
-    public ServicosDto(Long id, String nome, Float valor, String descricao, Long quantidadeDisponivel, EstabelecimentosDto estabelecimento, List<UsuariosDto> usuarios) {
+    public ServicosDto(Long id, String nome, Float valor, String descricao, Long quantidadeDisponivel, EstabelecimentosDto estabelecimento, Set<UsuariosDto> usuarios) {
         this.id = id;
         this.nome = nome;
         this.valor = valor;
@@ -31,5 +30,5 @@ public class ServicosDto {
     public String getDescricao() { return descricao; }
     public Long getQuantidadeDisponivel() { return quantidadeDisponivel; }
     public EstabelecimentosDto getEstabelecimento() { return estabelecimento; }
-    public List<UsuariosDto> getUsuarios() { return usuarios; }
+    public Set<UsuariosDto> getUsuarios() { return usuarios; }
 }

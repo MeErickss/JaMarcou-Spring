@@ -1,5 +1,7 @@
 package com.example.demo.dto;
 
+import com.example.demo.model.enumeration.Funcoes;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,10 +17,12 @@ public class UsuariosDto {
     private String statusUsuario;
     private EstabelecimentosDto estabelecimento;
     private List<ServicosDto> servicos;
+    private List<HorariosDto> horarios;
+    private List<Funcoes> funcoes;
 
     public UsuariosDto() {}
 
-    public UsuariosDto(Long id, String email, String nome, String sobrenome, String cpf, String senha, LocalDateTime dataNascimento, String linkImagem, String statusUsuario, EstabelecimentosDto estabelecimento, List<ServicosDto> servicos) {
+    public UsuariosDto(Long id, String email, String nome, List<Funcoes> funcoes, String sobrenome, String cpf, String senha, LocalDateTime dataNascimento, String linkImagem, String statusUsuario, EstabelecimentosDto estabelecimento, List<ServicosDto> servicos, List<HorariosDto> horarios) {
         this.id = id;
         this.email = email;
         this.nome = nome;
@@ -30,6 +34,8 @@ public class UsuariosDto {
         this.statusUsuario = statusUsuario;
         this.estabelecimento = estabelecimento;
         this.servicos = servicos;
+        this.horarios = horarios;
+        this.funcoes = funcoes;
     }
 
     public Long getId() { return id; }
@@ -43,4 +49,6 @@ public class UsuariosDto {
     public String getStatusUsuario() { return statusUsuario; }
     public EstabelecimentosDto getEstabelecimento() { return estabelecimento; }
     public List<ServicosDto> getServicos() { return servicos; }
+    public List<HorariosDto> getHorarios() { return horarios; }
+    public List<Funcoes> getFuncoes() {return funcoes;}
 }

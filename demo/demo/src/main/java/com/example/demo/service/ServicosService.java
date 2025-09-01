@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.ServicosDto;
 import com.example.demo.model.Estabelecimentos;
 import com.example.demo.model.Servicos;
 import com.example.demo.model.Usuarios;
@@ -9,9 +10,7 @@ import com.example.demo.repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ServicosService {
@@ -36,20 +35,46 @@ public class ServicosService {
     }
 
     // Criar serviço sem associar usuários
-    public Servicos criarServico(String descricao, String nome, Float valor, Long estabelecimentoId,
+    public void cadastrarServico(String descricao, String nome, Float valor,
                                  Long quantidadeDisponivel) {
-
-        Estabelecimentos e = estabelecimentosRepository.getReferenceById(estabelecimentoId);
 
         Servicos servico = new Servicos();
         servico.setDescricao(descricao);
         servico.setNome(nome);
-        servico.setEstabelecimento(e);
         servico.setValor(valor);
         servico.setQuantidadeDisponivel(quantidadeDisponivel);
-        servico.setUsuarios(new ArrayList<>()); // inicializa lista vazia
+        servico.setUsuarios(new HashSet<>()); // inicializa lista vazia
 
-        return servicosRepository.save(servico);
+        servicosRepository.save(servico);
+    }
+
+    public void cadastrarServico(ServicosDto dto) {
+
+        Servicos servico = new Servicos();
+        servico.setDescricao(dto.getDescricao());
+        servico.setNome(dto.getNome());
+        servico.setValor(dto.getValor());
+        servico.setQuantidadeDisponivel(dto.getQuantidadeDisponivel());
+        servico.setUsuarios(new HashSet<>()); // inicializa lista vazia
+
+        servicosRepository.save(servico);
+    }
+
+    public void atualizarServico(ServicosDto dto) {
+
+        Servicos servico = servicosRepository.getReferenceById(dto.getId());
+
+        servico.setDescricao(dto.getDescricao());
+        servico.setNome(dto.getNome());
+        servico.setValor(dto.getValor());
+        servico.setQuantidadeDisponivel(dto.getQuantidadeDisponivel());
+        //servico.setUsuarios(dto.getUsuarios());
+        servicosRepository.save(servico);
+    }
+
+    public void deletarServico(Long id){
+        Servicos s = servicosRepository.getReferenceById(id);
+        servicosRepository.delete(s);
     }
 
     // Associar usuários a um serviço existente

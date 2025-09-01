@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AvaliacoesDto;
 import com.example.demo.model.Avaliacoes;
 import com.example.demo.service.AvaliacoesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,16 @@ public class AvaliacoesController {
     public ResponseEntity<List<Avaliacoes>> getAllAvaliacoes() {
         List<Avaliacoes> avaliacoes = avaliacoesService.listAllAvaliacoes();
         return ResponseEntity.ok(avaliacoes);
+    }
+
+    @PostMapping
+    public void cadastrarAvaliacoes(@RequestParam AvaliacoesDto dto) {
+        avaliacoesService.cadastrarAvaliacao(dto);
+    }
+
+    @PutMapping
+    public void atualizarAvaliacoes(@RequestParam AvaliacoesDto dto){
+        avaliacoesService.atualizarAvaliacao(dto);
     }
 
     // Buscar avaliação por ID

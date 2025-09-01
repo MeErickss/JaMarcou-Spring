@@ -1,14 +1,11 @@
 package com.example.demo.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "estabelecimentos")
@@ -32,25 +29,28 @@ public class Estabelecimentos {
     private String senha;
 
     @ManyToOne
-    @JoinColumn(name = "categorias_id") // nome da coluna FK
+    @JoinColumn(name = "categorias_id")
     private Categorias categoria;
+
+    // RELAÇÃO -> Um estabelecimento pode ter vários usuários
+    @OneToMany(mappedBy = "estabelecimento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Usuarios> usuarios = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
-            name = "estabelecimentos_usuarios", // nome da tabela de junção
-            joinColumns = @JoinColumn(name = "estabelecimento_id"), // FK para esta entidade
-            inverseJoinColumns = @JoinColumn(name = "usuario_id")    // FK para a outra entidade
+            name = "estabelecimentos_servicos",
+            joinColumns = @JoinColumn(name = "estabelecimentos_id"),
+            inverseJoinColumns = @JoinColumn(name = "servicos_id")
     )
-    @JsonIgnore
-    private List<Usuarios> usuarios = new ArrayList<>();
-
+    private Set<Servicos> servicos = new HashSet<>();
 
     @Column(nullable = false)
     private String linkImg;
 
     public Estabelecimentos() {}
 
-    public Estabelecimentos(Long id, String nome, Locais local, List<Usuarios> usuarios, LocalDateTime dataCriacao, String senha, Categorias categoria, String linkImg) {
+    public Estabelecimentos(Long id, String nome, Locais local, Set<Usuarios> usuarios, LocalDateTime dataCriacao,
+                            String senha, Categorias categoria, String linkImg, Set<Servicos> servicos) {
         this.id = id;
         this.nome = nome;
         this.local = local;
@@ -59,6 +59,7 @@ public class Estabelecimentos {
         this.categoria = categoria;
         this.linkImg = linkImg;
         this.usuarios = usuarios;
+        this.servicos = servicos;
     }
 
     public Long getId() {return id;}
@@ -68,7 +69,8 @@ public class Estabelecimentos {
     public String getLinkImg() {return linkImg;}
     public Categorias getCategoria() {return categoria;}
     public Locais getLocal() {return local;}
-    public List<Usuarios> getUsuarios() {return usuarios;}
+    public Set<Usuarios> getUsuarios() {return usuarios;}
+    public Set<Servicos> getServicos() {return servicos;}
 
     public void setCategoria(Categorias categoria) {this.categoria = categoria;}
     public void setLocal(Locais local) {this.local = local;}
@@ -76,5 +78,6 @@ public class Estabelecimentos {
     public void setSenha(String senha) {this.senha = senha;}
     public void setDataCriacao(LocalDateTime dataCriacao) {this.dataCriacao = dataCriacao;}
     public void setLinkImg(String linkImg) {this.linkImg = linkImg;}
-    public void setUsuarios(List<Usuarios> usuarios) {this.usuarios = usuarios;}
+    public void setUsuarios(Set<Usuarios> usuarios) {this.usuarios = usuarios;}
+    public void setServicos(Set<Servicos> servicos) {this.servicos = servicos;}
 }
