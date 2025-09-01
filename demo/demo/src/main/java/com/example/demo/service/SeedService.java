@@ -74,11 +74,11 @@ public class SeedService implements ApplicationRunner {
         locaisService.cadastrarLocal(654, "44444-555", "Rua das Flores", "Loja 10", -23.55400);
 
         // ===================== ESTABELECIMENTOS =====================
-        estabelecimentosService.cadastrarEstabelecimento(1L, 1L, "https://via.placeholder.com/150", LocalDateTime.now(), "Barber Shop", "123456", "44 99809-1064");
-        estabelecimentosService.cadastrarEstabelecimento(2L, 2L, "https://via.placeholder.com/150", LocalDateTime.now(), "Beauty Salon", "123456", "44 99809-1064");
-        estabelecimentosService.cadastrarEstabelecimento(3L, 3L, "https://via.placeholder.com/150", LocalDateTime.now(), "Spa Facial", "123456", "44 99809-1064");
-        estabelecimentosService.cadastrarEstabelecimento(4L, 4L, "https://via.placeholder.com/150", LocalDateTime.now(), "Clínica Corpo & Saúde", "123456", "44 99809-1064");
-        estabelecimentosService.cadastrarEstabelecimento(5L, 5L, "https://via.placeholder.com/150", LocalDateTime.now(), "Massagens Relax", "123456", "44 99809-1064");
+        estabelecimentosService.cadastrarEstabelecimento(1L, 1L, "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmFyYmVyc2hvcHxlbnwwfHwwfHx8MA%3D%3D", LocalDateTime.now(), "Barber Shop", "123456", "44 99809-1064");
+        estabelecimentosService.cadastrarEstabelecimento(2L, 2L, "https://media.istockphoto.com/id/1856117770/pt/foto/modern-beauty-salon.jpg?s=612x612&w=0&k=20&c=fmGnHKgPpFPjGS1FzQQkSvJ2J-cuvkITHWwnbGhtZeo=", LocalDateTime.now(), "Beauty Salon", "123456", "44 99809-1064");
+        estabelecimentosService.cadastrarEstabelecimento(3L, 3L, "https://images.squarespace-cdn.com/content/v1/5b8962ea4eddec1828a9ee2b/0269b17e-d2bf-471f-9352-f8a47812c4f0/Facial-providence-ri.jpg", LocalDateTime.now(), "Spa Facial", "123456", "44 99809-1064");
+        estabelecimentosService.cadastrarEstabelecimento(4L, 4L, "https://images.unsplash.com/photo-1629909613654-28e377c37b09?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2xpbmljfGVufDB8fDB8fHww", LocalDateTime.now(), "Clínica Corpo & Saúde", "123456", "44 99809-1064");
+        estabelecimentosService.cadastrarEstabelecimento(5L, 5L, "https://images.squarespace-cdn.com/content/v1/5f2864b6ee63644ee0b157d3/1700953967219-ZG5U9WWAORHK4P0M9PON/Massage+therapist+doing+massage+for+a+woman.jpg", LocalDateTime.now(), "Massagens Relax", "123456", "44 99809-1064");
 
         // ===================== USUÁRIOS =====================
         usuariosService.cadastrarUsuario(LocalDateTime.of(2000, 1, 1, 0, 0), "11111111111", 1L, "https://via.placeholder.com/100", "João", "123", "Silva", "ATIVO","joao@gmail.com", List.of(Funcoes.CLIENTE));
