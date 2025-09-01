@@ -10,10 +10,11 @@ public class EstabelecimentosDto {
     private String linkImg;
     private Long categoriaId;
     private String senha;
+    private String telefone;
 
     public EstabelecimentosDto() {}
 
-    public EstabelecimentosDto(Long id, String nome, Long localId, LocalDateTime dataCriacao, String linkImg, Long categoriaId, String senha) {
+    public EstabelecimentosDto(Long id, String nome, Long localId, LocalDateTime dataCriacao, String linkImg, Long categoriaId, String senha, String telefone) {
         this.id = id;
         this.nome = nome;
         this.localId = localId;
@@ -21,19 +22,15 @@ public class EstabelecimentosDto {
         this.linkImg = linkImg;
         this.categoriaId = categoriaId;
         this.senha = senha;
+        this.telefone = telefone;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
+    public Long getId() {return id;}
+    public String getNome() {return nome;}
     public Long getLocalId() {return localId;}
     public LocalDateTime getDataCriacao() {return dataCriacao;}
     public String getLinkImg() {return linkImg;}
     public Long getCategoriaId() {return categoriaId;}
     public String getSenha() {return senha;}
+    public String getTelefone() {return telefone;}
 }

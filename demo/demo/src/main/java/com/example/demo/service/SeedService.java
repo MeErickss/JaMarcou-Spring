@@ -74,11 +74,11 @@ public class SeedService implements ApplicationRunner {
         locaisService.cadastrarLocal(654, "44444-555", "Rua das Flores", "Loja 10", -23.55400);
 
         // ===================== ESTABELECIMENTOS =====================
-        estabelecimentosService.cadastrarEstabelecimento(1L, 1L, "https://via.placeholder.com/150", LocalDateTime.now(), "Barber Shop", "123456");
-        estabelecimentosService.cadastrarEstabelecimento(2L, 2L, "https://via.placeholder.com/150", LocalDateTime.now(), "Beauty Salon", "123456");
-        estabelecimentosService.cadastrarEstabelecimento(3L, 3L, "https://via.placeholder.com/150", LocalDateTime.now(), "Spa Facial", "123456");
-        estabelecimentosService.cadastrarEstabelecimento(4L, 4L, "https://via.placeholder.com/150", LocalDateTime.now(), "Clínica Corpo & Saúde", "123456");
-        estabelecimentosService.cadastrarEstabelecimento(5L, 5L, "https://via.placeholder.com/150", LocalDateTime.now(), "Massagens Relax", "123456");
+        estabelecimentosService.cadastrarEstabelecimento(1L, 1L, "https://via.placeholder.com/150", LocalDateTime.now(), "Barber Shop", "123456", "44 99809-1064");
+        estabelecimentosService.cadastrarEstabelecimento(2L, 2L, "https://via.placeholder.com/150", LocalDateTime.now(), "Beauty Salon", "123456", "44 99809-1064");
+        estabelecimentosService.cadastrarEstabelecimento(3L, 3L, "https://via.placeholder.com/150", LocalDateTime.now(), "Spa Facial", "123456", "44 99809-1064");
+        estabelecimentosService.cadastrarEstabelecimento(4L, 4L, "https://via.placeholder.com/150", LocalDateTime.now(), "Clínica Corpo & Saúde", "123456", "44 99809-1064");
+        estabelecimentosService.cadastrarEstabelecimento(5L, 5L, "https://via.placeholder.com/150", LocalDateTime.now(), "Massagens Relax", "123456", "44 99809-1064");
 
         // ===================== USUÁRIOS =====================
         usuariosService.cadastrarUsuario(LocalDateTime.of(2000, 1, 1, 0, 0), "11111111111", 1L, "https://via.placeholder.com/100", "João", "123", "Silva", "ATIVO","joao@gmail.com", List.of(Funcoes.CLIENTE));

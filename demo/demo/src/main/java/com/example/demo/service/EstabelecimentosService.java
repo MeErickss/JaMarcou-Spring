@@ -41,7 +41,7 @@ public class EstabelecimentosService {
         return estabelecimentosRepository.findById(id);
     }
 
-    public void cadastrarEstabelecimento(Long categoriaId, Long localId, String linkImg, LocalDateTime dataCriacao, String nome, String senha) {
+    public void cadastrarEstabelecimento(Long categoriaId, Long localId, String linkImg, LocalDateTime dataCriacao, String nome, String senha, String telefone) {
         Categorias c = categoriasRepository.getReferenceById(categoriaId);
 
         Locais l = locaisRepository.getReferenceById(localId);
@@ -54,6 +54,7 @@ public class EstabelecimentosService {
         e.setLocal(l);
         e.setLinkImg(linkImg);
         e.setSenha(senha);
+        e.setTelefone(telefone);
         e.setUsuarios(new HashSet<>());
         e.setServicos(new HashSet<>());
         estabelecimentosRepository.save(e);
@@ -71,6 +72,7 @@ public class EstabelecimentosService {
         e.setNome(dto.getNome());
         e.setLocal(l);
         e.setLinkImg(dto.getLinkImg());
+        e.setTelefone(dto.getTelefone());
         e.setSenha(dto.getSenha());
         e.setUsuarios(new HashSet<>());
         e.setServicos(new HashSet<>());
@@ -90,6 +92,7 @@ public class EstabelecimentosService {
         e.setNome(dto.getNome());
         e.setLocal(l);
         e.setLinkImg(dto.getLinkImg());
+        e.setTelefone(dto.getTelefone());
         e.setSenha(dto.getSenha());
         e.setUsuarios(new HashSet<>());
         e.setServicos(new HashSet<>());
