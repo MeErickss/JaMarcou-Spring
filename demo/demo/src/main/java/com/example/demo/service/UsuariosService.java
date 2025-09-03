@@ -1,21 +1,25 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.LoginDto;
+import com.example.demo.dto.LoginGoogleDto;
 import com.example.demo.dto.UsuariosDto;
 import com.example.demo.model.Estabelecimentos;
 import com.example.demo.model.Usuarios;
 import com.example.demo.model.enumeration.Funcoes;
 import com.example.demo.repository.EstabelecimentosRepository;
 import com.example.demo.repository.UsuariosRepository;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.regex.Pattern;
 
 @Service
 public class UsuariosService {
@@ -28,6 +32,11 @@ public class UsuariosService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    private static final Pattern YA29_PATTERN = Pattern.compile("^ya29\\.[A-Za-z0-9._\\-]+$");
+
+    // 🔹 Coloque aqui o CLIENT_ID da sua aplicação no Google Cloud
+    private static final String CLIENT_ID = "SEU_CLIENT_ID.apps.googleusercontent.com";
 
     // Listar todos
     public List<Usuarios> listAllUsuarios() {
@@ -111,6 +120,38 @@ public class UsuariosService {
         String token = JwtService.gerarToken(usuario.getEmail());
         return token;
     }
+
+    public String validarLogin(LoginGoogleDto dto) {
+        try {
+            GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
+                    new NetHttpTransport(),
+                    GsonFactory.getDefaultInstance()
+            ).setAudience(Collections.singletonList(CLIENT_ID))
+                    .build();
+
+            GoogleIdToken idToken = verifier.verify(dto.getToken());
+
+            if (idToken == null) {
+                throw new RuntimeException("Token Google inválido");
+            }
+
+            GoogleIdToken.Payload payload = idToken.getPayload();
+            String emailGoogle = payload.getEmail();
+
+            // 🔹 Verifica no banco se o usuário existe
+            Usuarios usuario = usuariosRepository.findByEmail(emailGoogle);
+            if (usuario == null) {
+                throw new RuntimeException("Usuário não encontrado no sistema");
+            }
+
+            // 🔹 Gera o token JWT interno da aplicação
+            return JwtService.gerarToken(usuario.getEmail());
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao validar login Google: " + e.getMessage(), e);
+        }
+    }
+
 
     public void atualizarUsuario(UsuariosDto dto){
 

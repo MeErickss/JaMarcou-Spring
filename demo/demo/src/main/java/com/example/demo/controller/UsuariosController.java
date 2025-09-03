@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.LoginDto;
+import com.example.demo.dto.LoginGoogleDto;
 import com.example.demo.dto.ServicosDto;
 import com.example.demo.dto.UsuariosDto;
 import com.example.demo.model.Usuarios;
@@ -51,6 +52,13 @@ public class UsuariosController {
         if (token == null) {
             return ("Email ou senha inválidos");
         }
+
+        return token;
+    }
+
+    @PostMapping("/logingoogle")
+    public String validarLoginGoogle(@RequestBody LoginGoogleDto dto){
+        String token = usuariosService.validarLogin(dto);
 
         return token;
     }
