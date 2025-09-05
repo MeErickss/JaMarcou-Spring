@@ -1,10 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Agendamentos;
-import com.example.demo.repository.AgendamentosRepository;
-import com.example.demo.repository.EstabelecimentosRepository;
-import com.example.demo.repository.ServicosRepository;
-import com.example.demo.repository.UsuariosRepository;
+import com.example.demo.dto.AgendamentosDto;
+import com.example.demo.model.*;
+import com.example.demo.model.enumeration.StatusHorario;
+import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +24,9 @@ public class AgendamentosService {
     private EstabelecimentosRepository estabelecimentosRepository;
 
     @Autowired
+    private HorariosRepository horariosRepository;
+
+    @Autowired
     private UsuariosRepository usuariosRepository;
 
     // listar todos
@@ -36,6 +38,50 @@ public class AgendamentosService {
     public Optional<Agendamentos> getAgendamentoById(Long id) {
         return agendamentosRepository.findById(id);
     }
+
+
+    public void criarAgendamento(Long servicoId, Long estabelecimentoId, Long clienteId, Long funcionarioId, Long horarioId, LocalDateTime criadoEm, StatusHorario statusHorario, String observacoes){
+        Servicos s = servicosRepository.getReferenceById(servicoId);
+        Estabelecimentos e = estabelecimentosRepository.getReferenceById(estabelecimentoId);
+        Usuarios c = usuariosRepository.getReferenceById(clienteId);
+        Usuarios f = usuariosRepository.getReferenceById(funcionarioId);
+        Horarios h = horariosRepository.getReferenceById(horarioId);
+
+        Agendamentos a = new Agendamentos();
+
+        a.setCliente(c);
+        a.setStatus(statusHorario);
+        a.setEstabelecimento(e);
+        a.setCriadoEm(criadoEm);
+        a.setObservacoes(observacoes);
+        a.setServico(s);
+        a.setHorario(h);
+        a.setFuncionario(f);
+
+        agendamentosRepository.save(a);
+    }
+
+    public void criarAgendamento(AgendamentosDto dto){
+        Servicos s = servicosRepository.getReferenceById(dto.getServicoId());
+        Estabelecimentos e = estabelecimentosRepository.getReferenceById(dto.getEstabelecimentoId());
+        Usuarios c = usuariosRepository.getReferenceById(dto.getClienteId());
+        Usuarios f = usuariosRepository.getReferenceById(dto.getFuncionarioId());
+        Horarios h = horariosRepository.getReferenceById(dto.getHorarioId());
+
+        Agendamentos a = new Agendamentos();
+
+        a.setCliente(c);
+        a.setStatus(dto.getStatus());
+        a.setEstabelecimento(e);
+        a.setCriadoEm(LocalDateTime.now());
+        a.setObservacoes(dto.getObservacoes());
+        a.setServico(s);
+        a.setHorario(h);
+        a.setFuncionario(f);
+
+        agendamentosRepository.save(a);
+    }
+
 
     // deletar
     public void deletarAgendamento(Long id) {
