@@ -112,16 +112,27 @@ public class EstabelecimentosService {
         boolean jaTemGerente = e.getUsuarios().stream()
                 .anyMatch(user -> user.getFuncoes().contains(Funcoes.GERENTE));
 
+        // Cria uma nova lista mutável contendo CLIENTE sempre
+        List<Funcoes> novasFuncoes = new ArrayList<>();
+        novasFuncoes.add(Funcoes.CLIENTE);
+
         if (!jaTemGerente) {
-            u.getFuncoes().clear();
-            u.getFuncoes().add(Funcoes.GERENTE);
+            // [CLIENTE, FUNCIONARIO, GERENTE]
+            novasFuncoes.add(Funcoes.FUNCIONARIO);
+            novasFuncoes.add(Funcoes.GERENTE);
         } else {
-            u.getFuncoes().clear();
-            u.getFuncoes().add(Funcoes.FUNCIONARIO);
+            // [CLIENTE, FUNCIONARIO]
+            novasFuncoes.add(Funcoes.FUNCIONARIO);
         }
 
-        // Associa o usuário ao estabelecimento
-        e.getUsuarios().add(u);
+        // Substitui a lista (não tenta mutar a original)
+        u.setFuncoes(novasFuncoes);
+
+        // Associa o usuário ao estabelecimento (evita duplicata)
+        if (!e.getUsuarios().contains(u)) {
+            e.getUsuarios().add(u);
+        }
+
         estabelecimentosRepository.save(e);
     }
 

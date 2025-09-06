@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CategoriasDto;
 import com.example.demo.dto.EstabelecimentosDto;
 import com.example.demo.model.Estabelecimentos;
 import com.example.demo.repository.EstabelecimentosRepository;
@@ -50,6 +49,5 @@ public class EstabelecimentosController {
             List<Estabelecimentos> estabelecimento = estabelecimentosRepository.findAllWithUsuarios();
         return ResponseEntity.ok(estabelecimento);
     }
-
 
 }

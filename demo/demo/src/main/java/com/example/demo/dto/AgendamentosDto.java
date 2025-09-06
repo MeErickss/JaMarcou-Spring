@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.model.Agendamentos;
 import com.example.demo.model.enumeration.StatusHorario;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,17 @@ public class AgendamentosDto {
         this.horarioId = horarioId;
         this.observacoes = observacoes;
         this.status = status;
+    }
+
+    public AgendamentosDto(Agendamentos agendamento) {
+        this.id = agendamento.getId();
+        this.servicoId = agendamento.getServico() != null ? agendamento.getServico().getId() : null;
+        this.estabelecimentoId = agendamento.getEstabelecimento() != null ? agendamento.getEstabelecimento().getId() : null;
+        this.clienteId = agendamento.getCliente() != null ? agendamento.getCliente().getId() : null;
+        this.funcionarioId = agendamento.getFuncionario() != null ? agendamento.getFuncionario().getId() : null;
+        this.horarioId = agendamento.getHorario() != null ? agendamento.getHorario().getId() : null;
+        this.observacoes = agendamento.getObservacoes();
+        this.status = agendamento.getStatus();
     }
 
     // getters e setters
