@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -40,8 +41,8 @@ public class HorariosController {
 
     // 🔹 Buscar horário por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Horarios> buscarPorId(@PathVariable Long id) {
-        Optional<Horarios> horario = horariosRepository.findById(id);
-        return horario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        Object[] horario = horariosRepository.findMinStartAndMaxEndByEstabelecimentoId(id);
+        return ResponseEntity.ok(horario);
     }
 }
