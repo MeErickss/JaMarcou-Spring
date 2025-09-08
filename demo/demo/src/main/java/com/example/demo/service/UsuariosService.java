@@ -119,7 +119,7 @@ public class UsuariosService {
 
         // Gera o token JWT
         String token = JwtService.gerarToken(usuario.getEmail());
-        return new LoginResponseDto(token, usuario.getId());
+        return new LoginResponseDto(token, usuario.getId(), usuario.getFuncoes());
     }
 
 
