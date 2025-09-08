@@ -28,5 +28,11 @@ public class AgendamentosController {
         return agendamentos.stream().map(AgendamentosDto::new).toList();
     }
 
+    @GetMapping("/{id:\\d+}")
+    public ResponseEntity<List<Agendamentos>> listarAgendamentosUsuario(@PathVariable Long id) {
+        List<Agendamentos> agendamentos = agendamentosRepository.findByUsuarioId(id);
+        return ResponseEntity.ok(agendamentos);
+    }
+
 
 }

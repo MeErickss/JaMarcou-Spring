@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.model.enumeration.StatusHorario;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -24,26 +25,31 @@ public class Agendamentos {
     // serviço agendado
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "servico_id", nullable = false)
+    @JsonManagedReference(value = "servico-agendamentos")
     private Servicos servico;
 
     // estabelecimento
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estabelecimento_id", nullable = false)
+    @JsonManagedReference(value = "estabelecimento-agendamentos")
     private Estabelecimentos estabelecimento;
 
     // cliente (quem marcou)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
+    @JsonManagedReference(value = "cliente-agendamentos")
     private Usuarios cliente;
 
     // funcionário que irá atender (também usuário)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "funcionario_id", nullable = false)
+    @JsonManagedReference(value = "funcionario-agendamentos")
     private Usuarios funcionario;
 
-    // agora referência ao Horario de onde vem dataInicio/dataFim
+    // referência ao Horario de onde vem dataInicio/dataFim
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "horario_id", nullable = false)
+    @JsonManagedReference(value = "horario-agendamentos")
     private Horarios horario;
 
     @Column(name = "criado_em", nullable = false)
@@ -55,7 +61,6 @@ public class Agendamentos {
 
     @Column(length = 1000)
     private String observacoes;
-
 
     public Agendamentos() {}
 

@@ -28,7 +28,7 @@ public class EstabelecimentosController {
     }
 
     @PostMapping
-    public void cadastrarEstabelecimentos(@RequestParam EstabelecimentosDto dto) {
+    public void cadastrarEstabelecimentos(@RequestBody EstabelecimentosDto dto) {
         estabelecimentosService.cadastrarEstabelecimento(dto);
     }
 
@@ -47,6 +47,12 @@ public class EstabelecimentosController {
     @GetMapping("/relacoes")
     public ResponseEntity<List<Estabelecimentos>> listarRelacoesEstabelecimentos(){
             List<Estabelecimentos> estabelecimento = estabelecimentosRepository.findAllWithUsuarios();
+        return ResponseEntity.ok(estabelecimento);
+    }
+
+    @GetMapping("/gerente/{id:\\d+}")
+    public ResponseEntity<List<Estabelecimentos>> listarGerente(@PathVariable Long id){
+        List<Estabelecimentos> estabelecimento = estabelecimentosRepository.findEstabelecimentosOndeUsuarioEhGerente(id);
         return ResponseEntity.ok(estabelecimento);
     }
 

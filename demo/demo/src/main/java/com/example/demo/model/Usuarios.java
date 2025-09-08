@@ -42,10 +42,13 @@ public class Usuarios {
     @Column(nullable = false)
     private String statusUsuario;
 
-    @Column(nullable = false)
-    private List<Funcoes> funcoes;
+    @ElementCollection(targetClass = Funcoes.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "usuario_funcoes", joinColumns = @JoinColumn(name = "usuario_id"))
+    @Column(name = "funcao", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<Funcoes> funcoes = new HashSet<>();
 
-    // RELAÇÃO -> Muitos usuários para 1 estabelecimento
+
     @ManyToOne
     @JoinColumn(name = "estabelecimento_id", nullable = false)
     @JsonIgnore
@@ -55,15 +58,22 @@ public class Usuarios {
     @JsonBackReference(value = "usuario-servico")
     private Set<Servicos> servicos = new HashSet<>();
 
-    // HORARIOS: um usuário possui muitos horários
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "usuario-horario")
     private Set<Horarios> horarios = new HashSet<>();
 
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference(value = "cliente-agendamentos")
+    private Set<Agendamentos> agendamentosComoCliente = new HashSet<>();
+
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference(value = "funcionario-agendamentos")
+    private Set<Agendamentos> agendamentosComoFuncionario = new HashSet<>();
+
     public Usuarios() {}
 
     public Usuarios(Long id, String nome, String email, Estabelecimentos estabelecimento, String sobrenome, String cpf,
-                    String senha, List<Funcoes> funcoes, Set<Servicos> servicos, LocalDateTime dataNascimento, String linkImagem, String statusUsuario) {
+                    String senha, Set<Funcoes> funcoes, Set<Servicos> servicos, LocalDateTime dataNascimento, String linkImagem, String statusUsuario) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -78,6 +88,7 @@ public class Usuarios {
         this.funcoes = funcoes;
     }
 
+    // getters/setters originais...
     public Long getId() { return id; }
     public String getCpf() { return cpf; }
     public LocalDateTime getDataNascimento() { return dataNascimento; }
@@ -90,8 +101,16 @@ public class Usuarios {
     public String getEmail() { return email; }
     public Estabelecimentos getEstabelecimento() { return estabelecimento; }
     public Set<Horarios> getHorarios() { return horarios; }
-    public List<Funcoes> getFuncoes() {return funcoes;}
+    public Set<Funcoes> getFuncoes() {return funcoes;}
 
+    // novos getters/setters
+    public Set<Agendamentos> getAgendamentosComoCliente() { return agendamentosComoCliente; }
+    public void setAgendamentosComoCliente(Set<Agendamentos> agendamentosComoCliente) { this.agendamentosComoCliente = agendamentosComoCliente; }
+
+    public Set<Agendamentos> getAgendamentosComoFuncionario() { return agendamentosComoFuncionario; }
+    public void setAgendamentosComoFuncionario(Set<Agendamentos> agendamentosComoFuncionario) { this.agendamentosComoFuncionario = agendamentosComoFuncionario; }
+
+    // setters originais...
     public void setCpf(String cpf) { this.cpf = cpf; }
     public void setDataNascimento(LocalDateTime dataNascimento) { this.dataNascimento = dataNascimento; }
     public void setLinkImagem(String linkImagem) { this.linkImagem = linkImagem; }
@@ -103,5 +122,5 @@ public class Usuarios {
     public void setEmail(String email) { this.email = email; }
     public void setEstabelecimento(Estabelecimentos estabelecimento) { this.estabelecimento = estabelecimento; }
     public void setHorarios(Set<Horarios> horarios) { this.horarios = horarios; }
-    public void setFuncoes(List<Funcoes> funcoes) {this.funcoes = funcoes;}
+    public void setFuncoes(Set<Funcoes> funcoes) {this.funcoes = funcoes;}
 }

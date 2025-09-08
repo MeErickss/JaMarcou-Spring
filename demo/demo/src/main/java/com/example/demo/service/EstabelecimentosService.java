@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EstabelecimentosService {
@@ -41,7 +38,7 @@ public class EstabelecimentosService {
         return estabelecimentosRepository.findById(id);
     }
 
-    public void cadastrarEstabelecimento(Long categoriaId, Long localId, String linkImg, LocalDateTime dataCriacao, String nome, String senha, String telefone) {
+    public void cadastrarEstabelecimento(Long categoriaId, Long localId, String linkImg, LocalDateTime dataCriacao, String nome, String senha, String telefone, String descricao) {
         Categorias c = categoriasRepository.getReferenceById(categoriaId);
 
         Locais l = locaisRepository.getReferenceById(localId);
@@ -57,6 +54,7 @@ public class EstabelecimentosService {
         e.setTelefone(telefone);
         e.setUsuarios(new HashSet<>());
         e.setServicos(new HashSet<>());
+        e.setDescricao(descricao);
         estabelecimentosRepository.save(e);
     }
 
@@ -76,6 +74,7 @@ public class EstabelecimentosService {
         e.setSenha(dto.getSenha());
         e.setUsuarios(new HashSet<>());
         e.setServicos(new HashSet<>());
+        e.setDescricao(dto.getDescricao());
         estabelecimentosRepository.save(e);
     }
 
@@ -113,7 +112,7 @@ public class EstabelecimentosService {
                 .anyMatch(user -> user.getFuncoes().contains(Funcoes.GERENTE));
 
         // Cria uma nova lista mutável contendo CLIENTE sempre
-        List<Funcoes> novasFuncoes = new ArrayList<>();
+        Set<Funcoes> novasFuncoes = new HashSet<>();
         novasFuncoes.add(Funcoes.CLIENTE);
 
         if (!jaTemGerente) {

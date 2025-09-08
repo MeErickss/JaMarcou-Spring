@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ public class Estabelecimentos {
     @Column(nullable = false)
     private String nome;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "locais_id", referencedColumnName = "id", nullable = false)
     private Locais local;
 
@@ -47,13 +48,21 @@ public class Estabelecimentos {
     )
     private Set<Servicos> servicos = new HashSet<>();
 
+    // NOVO: agendamentos deste estabelecimento
+    @OneToMany(mappedBy = "estabelecimento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference(value = "estabelecimento-agendamentos")
+    private Set<Agendamentos> agendamentos = new HashSet<>();
+
     @Column(nullable = false)
     private String linkImg;
+
+    @Column(nullable = false)
+    private String descricao;
 
     public Estabelecimentos() {}
 
     public Estabelecimentos(Long id, String nome, Locais local, Set<Usuarios> usuarios, LocalDateTime dataCriacao,
-                            String senha, Categorias categoria, String linkImg, Set<Servicos> servicos, String telefone) {
+                            String senha, Categorias categoria, String linkImg, Set<Servicos> servicos, String telefone, String descricao) {
         this.id = id;
         this.nome = nome;
         this.local = local;
@@ -64,7 +73,10 @@ public class Estabelecimentos {
         this.usuarios = usuarios;
         this.servicos = servicos;
         this.telefone = telefone;
+        this.descricao = descricao;
     }
+
+    // getters/setters originais...
 
     public Long getId() {return id;}
     public String getNome() {return nome;}
@@ -76,6 +88,8 @@ public class Estabelecimentos {
     public Set<Usuarios> getUsuarios() {return usuarios;}
     public Set<Servicos> getServicos() {return servicos;}
     public String getTelefone() {return telefone;}
+    public Set<Agendamentos> getAgendamentos() { return agendamentos; }
+    public String getDescricao() {return descricao;}
 
     public void setCategoria(Categorias categoria) {this.categoria = categoria;}
     public void setLocal(Locais local) {this.local = local;}
@@ -86,4 +100,6 @@ public class Estabelecimentos {
     public void setUsuarios(Set<Usuarios> usuarios) {this.usuarios = usuarios;}
     public void setServicos(Set<Servicos> servicos) {this.servicos = servicos;}
     public void setTelefone(String telefone) {this.telefone = telefone;}
+    public void setAgendamentos(Set<Agendamentos> agendamentos) { this.agendamentos = agendamentos; }
+    public void setDescricao(String descricao) {this.descricao = descricao;}
 }

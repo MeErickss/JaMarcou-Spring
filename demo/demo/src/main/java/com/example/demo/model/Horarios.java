@@ -22,8 +22,7 @@ public class Horarios {
     @Column(nullable = false)
     private LocalDateTime dataFim;
 
-    // Se Horarios relaciona com Servicos (@ManyToMany) mantenha outro campo separado.
-    // Aqui o campo 'usuario' representa qual usuário tem esse horário:
+    // campo 'usuario' representa qual usuário tem esse horário:
     @ManyToOne
     @JoinColumn(name = "usuarios_id", nullable = false)
     @JsonBackReference(value = "usuario-horario")
@@ -39,6 +38,11 @@ public class Horarios {
 
     @Column(nullable = false)
     private StatusHorario statusHorario;
+
+    // NOVO: agendamentos que usam este horario
+    @OneToMany(mappedBy = "horario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference(value = "horario-agendamentos")
+    private Set<Agendamentos> agendamentos = new HashSet<>();
 
     public Horarios() {}
 
@@ -59,6 +63,10 @@ public class Horarios {
     public Estabelecimentos getEstabelecimento() { return estabelecimento; }
     public StatusHorario getStatusHorario() { return statusHorario; }
     public Usuarios getUsuario() { return usuario; }
+
+    // novos getters/setters
+    public Set<Agendamentos> getAgendamentos() { return agendamentos; }
+    public void setAgendamentos(Set<Agendamentos> agendamentos) { this.agendamentos = agendamentos; }
 
     public void setDataFim(LocalDateTime dataFim) { this.dataFim = dataFim; }
     public void setDataInicio(LocalDateTime dataInicio) { this.dataInicio = dataInicio; }

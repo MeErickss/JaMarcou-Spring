@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -77,32 +79,32 @@ public class SeedService implements ApplicationRunner {
         locaisService.cadastrarLocal(654, "44444-555", "Rua das Flores", "Loja 10", -23.55400);
 
         // ===================== ESTABELECIMENTOS =====================
-        estabelecimentosService.cadastrarEstabelecimento(1L, 1L, "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmFyYmVyc2hvcHxlbnwwfHwwfHx8MA%3D%3D", LocalDateTime.now(), "Barber Shop", "123456", "44 99809-1064");
-        estabelecimentosService.cadastrarEstabelecimento(2L, 2L, "https://media.istockphoto.com/id/1856117770/pt/foto/modern-beauty-salon.jpg?s=612x612&w=0&k=20&c=fmGnHKgPpFPjGS1FzQQkSvJ2J-cuvkITHWwnbGhtZeo=", LocalDateTime.now(), "Beauty Salon", "123456", "44 99809-1064");
-        estabelecimentosService.cadastrarEstabelecimento(3L, 3L, "https://images.squarespace-cdn.com/content/v1/5b8962ea4eddec1828a9ee2b/0269b17e-d2bf-471f-9352-f8a47812c4f0/Facial-providence-ri.jpg", LocalDateTime.now(), "Spa Facial", "123456", "44 99809-1064");
-        estabelecimentosService.cadastrarEstabelecimento(4L, 4L, "https://images.unsplash.com/photo-1629909613654-28e377c37b09?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2xpbmljfGVufDB8fDB8fHww", LocalDateTime.now(), "Clínica Corpo & Saúde", "123456", "44 99809-1064");
-        estabelecimentosService.cadastrarEstabelecimento(5L, 5L, "https://images.squarespace-cdn.com/content/v1/5f2864b6ee63644ee0b157d3/1700953967219-ZG5U9WWAORHK4P0M9PON/Massage+therapist+doing+massage+for+a+woman.jpg", LocalDateTime.now(), "Massagens Relax", "123456", "44 99809-1064");
+        estabelecimentosService.cadastrarEstabelecimento(1L, 1L, "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmFyYmVyc2hvcHxlbnwwfHwwfHx8MA%3D%3D", LocalDateTime.now(), "Barber Shop", "123456", "44 99809-1064","a");
+        estabelecimentosService.cadastrarEstabelecimento(2L, 2L, "https://media.istockphoto.com/id/1856117770/pt/foto/modern-beauty-salon.jpg?s=612x612&w=0&k=20&c=fmGnHKgPpFPjGS1FzQQkSvJ2J-cuvkITHWwnbGhtZeo=", LocalDateTime.now(), "Beauty Salon", "123456", "44 99809-1064","a");
+        estabelecimentosService.cadastrarEstabelecimento(3L, 3L, "https://images.squarespace-cdn.com/content/v1/5b8962ea4eddec1828a9ee2b/0269b17e-d2bf-471f-9352-f8a47812c4f0/Facial-providence-ri.jpg", LocalDateTime.now(), "Spa Facial", "123456", "44 99809-1064","a");
+        estabelecimentosService.cadastrarEstabelecimento(4L, 4L, "https://images.unsplash.com/photo-1629909613654-28e377c37b09?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2xpbmljfGVufDB8fDB8fHww", LocalDateTime.now(), "Clínica Corpo & Saúde", "123456", "44 99809-1064","a");
+        estabelecimentosService.cadastrarEstabelecimento(5L, 5L, "https://images.squarespace-cdn.com/content/v1/5f2864b6ee63644ee0b157d3/1700953967219-ZG5U9WWAORHK4P0M9PON/Massage+therapist+doing+massage+for+a+woman.jpg", LocalDateTime.now(), "Massagens Relax", "123456", "44 99809-1064","a");
 
         // ===================== USUÁRIOS (originais) =====================
-        usuariosService.cadastrarUsuario(LocalDateTime.of(2000, 1, 1, 0, 0), "11111111111", 1L, "https://via.placeholder.com/100", "João", "123", "Silva", "ATIVO","joao@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1995, 5, 10, 0, 0), "22222222222", 1L, "https://via.placeholder.com/100", "Pedro", "123", "Almeida", "ATIVO","pedro@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1998, 8, 20, 0, 0), "33333333333", 2L, "https://via.placeholder.com/100", "Maria", "123", "Oliveira", "ATIVO","maria@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1985, 3, 15, 0, 0), "44444444444", 3L, "https://via.placeholder.com/100", "Ana", "123", "Costa", "ATIVO","ana@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1992, 7, 25, 0, 0), "55555555555", 3L, "https://via.placeholder.com/100", "Lucas", "123", "Souza", "ATIVO","lucas@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1988, 12, 5, 0, 0), "66666666666", 4L, "https://via.placeholder.com/100", "Clara", "123", "Mendes", "ATIVO","clara@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1999, 6, 18, 0, 0), "77777777777", 5L, "https://via.placeholder.com/100", "Diego", "123", "Santos", "ATIVO","diego@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1990, 4, 2, 0, 0), "88888888888", 1L, "https://via.placeholder.com/100", "Rafael", "123", "Pereira", "ATIVO","rafael@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1993, 9, 14, 0, 0), "99999999999", 1L, "https://via.placeholder.com/100", "Beatriz", "123", "Fernandes", "ATIVO","beatriz@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1987, 11, 6, 0, 0), "10101010101", 2L, "https://via.placeholder.com/100", "Fernanda", "123", "Lima", "ATIVO","fernanda@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1994, 2, 28, 0, 0), "12121212121", 2L, "https://via.placeholder.com/100", "Bruno", "123", "Ramos", "ATIVO","bruno@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1991, 12, 12, 0, 0), "13131313131", 3L, "https://via.placeholder.com/100", "Marina", "123", "Barros", "ATIVO","marina@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1989, 7, 3, 0, 0), "14141414141", 3L, "https://via.placeholder.com/100", "Thiago", "123", "Nogueira", "ATIVO","thiago@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1996, 10, 19, 0, 0), "15151515151", 4L, "https://via.placeholder.com/100", "Felipe", "123", "Moura", "ATIVO","felipe@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1997, 3, 8, 0, 0), "16161616161", 4L, "https://via.placeholder.com/100", "Gabriela", "123", "Cardoso", "ATIVO","gabriela@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1986, 6, 30, 0, 0), "17171717171", 5L, "https://via.placeholder.com/100", "Roberto", "123", "Teixeira", "ATIVO","roberto@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1998, 1, 25, 0, 0), "18181818181", 5L, "https://via.placeholder.com/100", "Patrícia", "123", "Gomes", "ATIVO","patricia@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1984, 8, 9, 0, 0), "19191919191", 1L, "https://via.placeholder.com/100", "André", "123", "Ribeiro", "ATIVO","andre@gmail.com", List.of(Funcoes.CLIENTE));
-        usuariosService.cadastrarUsuario(LocalDateTime.of(1992, 5, 5, 0, 0), "20202020202", 2L, "https://via.placeholder.com/100", "Juliana", "123", "Pinto", "ATIVO","juliana@gmail.com", List.of(Funcoes.CLIENTE));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(2000, 1, 1, 0, 0), "11111111111", 1L, "https://via.placeholder.com/100", "João", "123", "Silva", "ATIVO","joao@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1995, 5, 10, 0, 0), "22222222222", 1L, "https://via.placeholder.com/100", "Pedro", "123", "Almeida", "ATIVO","pedro@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1998, 8, 20, 0, 0), "33333333333", 2L, "https://via.placeholder.com/100", "Maria", "123", "Oliveira", "ATIVO","maria@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1985, 3, 15, 0, 0), "44444444444", 3L, "https://via.placeholder.com/100", "Ana", "123", "Costa", "ATIVO","ana@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1992, 7, 25, 0, 0), "55555555555", 3L, "https://via.placeholder.com/100", "Lucas", "123", "Souza", "ATIVO","lucas@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1988, 12, 5, 0, 0), "66666666666", 4L, "https://via.placeholder.com/100", "Clara", "123", "Mendes", "ATIVO","clara@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1999, 6, 18, 0, 0), "77777777777", 5L, "https://via.placeholder.com/100", "Diego", "123", "Santos", "ATIVO","diego@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1990, 4, 2, 0, 0), "88888888888", 1L, "https://via.placeholder.com/100", "Rafael", "123", "Pereira", "ATIVO","rafael@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1993, 9, 14, 0, 0), "99999999999", 1L, "https://via.placeholder.com/100", "Beatriz", "123", "Fernandes", "ATIVO","beatriz@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1987, 11, 6, 0, 0), "10101010101", 2L, "https://via.placeholder.com/100", "Fernanda", "123", "Lima", "ATIVO","fernanda@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1994, 2, 28, 0, 0), "12121212121", 2L, "https://via.placeholder.com/100", "Bruno", "123", "Ramos", "ATIVO","bruno@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1991, 12, 12, 0, 0), "13131313131", 3L, "https://via.placeholder.com/100", "Marina", "123", "Barros", "ATIVO","marina@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1989, 7, 3, 0, 0), "14141414141", 3L, "https://via.placeholder.com/100", "Thiago", "123", "Nogueira", "ATIVO","thiago@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1996, 10, 19, 0, 0), "15151515151", 4L, "https://via.placeholder.com/100", "Felipe", "123", "Moura", "ATIVO","felipe@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1997, 3, 8, 0, 0), "16161616161", 4L, "https://via.placeholder.com/100", "Gabriela", "123", "Cardoso", "ATIVO","gabriela@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1986, 6, 30, 0, 0), "17171717171", 5L, "https://via.placeholder.com/100", "Roberto", "123", "Teixeira", "ATIVO","roberto@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1998, 1, 25, 0, 0), "18181818181", 5L, "https://via.placeholder.com/100", "Patrícia", "123", "Gomes", "ATIVO","patricia@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1984, 8, 9, 0, 0), "19191919191", 1L, "https://via.placeholder.com/100", "André", "123", "Ribeiro", "ATIVO","andre@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1992, 5, 5, 0, 0), "20202020202", 2L, "https://via.placeholder.com/100", "Juliana", "123", "Pinto", "ATIVO","juliana@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
 
         // ===================== HORÁRIOS (adicionais para agendamentos) =====================
         horariosService.cadastrarHorario(StatusHorario.AGENDADO, LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(2).plusHours(1), LocalDateTime.now(), 1L, 1L);

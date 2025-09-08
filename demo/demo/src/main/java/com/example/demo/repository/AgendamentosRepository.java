@@ -15,4 +15,13 @@ public interface AgendamentosRepository extends JpaRepository<Agendamentos, Long
 
     List<Agendamentos> findByStatus(StatusHorario status);
 
+    @Query("SELECT DISTINCT a FROM Agendamentos a " +
+            "LEFT JOIN FETCH a.servico s " +
+            "LEFT JOIN FETCH a.estabelecimento e " +
+            "LEFT JOIN FETCH a.horario h " +
+            "LEFT JOIN FETCH a.cliente c " +
+            "LEFT JOIN FETCH a.funcionario f " +
+            "WHERE a.cliente.id = :userId OR a.funcionario.id = :userId")
+    List<Agendamentos> findByUsuarioId(@Param("userId") Long userId);
+
 }

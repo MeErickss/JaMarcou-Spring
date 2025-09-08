@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.LoginDto;
 import com.example.demo.dto.LoginGoogleDto;
+import com.example.demo.dto.LoginResponseDto;
 import com.example.demo.dto.UsuariosDto;
 import com.example.demo.model.Estabelecimentos;
 import com.example.demo.model.Usuarios;
@@ -49,7 +50,7 @@ public class UsuariosService {
     }
 
     public void cadastrarUsuario(LocalDateTime dataNascimento, String cpf, Long estabelecimentoId,
-                             String linkImg, String nome, String senha, String sobrenome, String status, String email, List<Funcoes> funcoes) {
+                             String linkImg, String nome, String senha, String sobrenome, String status, String email, Set<Funcoes> funcoes) {
 
         Estabelecimentos e = estabelecimentosRepository.getReferenceById(estabelecimentoId);
 
@@ -102,7 +103,7 @@ public class UsuariosService {
     }
 
 
-    public String validarLogin(LoginDto loginDto) {
+    public LoginResponseDto validarLogin(LoginDto loginDto) {
         // Busca o usuário pelo email
         Usuarios usuario = usuariosRepository.findByEmail(loginDto.getEmail());
 
@@ -118,38 +119,7 @@ public class UsuariosService {
 
         // Gera o token JWT
         String token = JwtService.gerarToken(usuario.getEmail());
-        return token;
-    }
-
-    public String validarLogin(LoginGoogleDto dto) {
-        try {
-            GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
-                    new NetHttpTransport(),
-                    GsonFactory.getDefaultInstance()
-            ).setAudience(Collections.singletonList(CLIENT_ID))
-                    .build();
-
-            GoogleIdToken idToken = verifier.verify(dto.getToken());
-
-            if (idToken == null) {
-                throw new RuntimeException("Token Google inválido");
-            }
-
-            GoogleIdToken.Payload payload = idToken.getPayload();
-            String emailGoogle = payload.getEmail();
-
-            // 🔹 Verifica no banco se o usuário existe
-            Usuarios usuario = usuariosRepository.findByEmail(emailGoogle);
-            if (usuario == null) {
-                throw new RuntimeException("Usuário não encontrado no sistema");
-            }
-
-            // 🔹 Gera o token JWT interno da aplicação
-            return JwtService.gerarToken(usuario.getEmail());
-
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao validar login Google: " + e.getMessage(), e);
-        }
+        return new LoginResponseDto(token, usuario.getId());
     }
 
 

@@ -1,13 +1,11 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.ManyToAny;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,7 +40,10 @@ public class Servicos {
     @JsonIgnore
     private Set<Estabelecimentos> estabelecimentos = new HashSet<>();
 
-
+    // NOVO: agendamentos que usam este servico
+    @OneToMany(mappedBy = "servico", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference(value = "servico-agendamentos")
+    private Set<Agendamentos> agendamentos = new HashSet<>();
 
     public Servicos() {}
 
@@ -63,6 +64,7 @@ public class Servicos {
     public Long getQuantidadeDisponivel() {return quantidadeDisponivel;}
     public Set<Usuarios> getUsuarios() {return usuarios;}
     public Set<Estabelecimentos> getEstabelecimentos() {return estabelecimentos;}
+    public Set<Agendamentos> getAgendamentos() { return agendamentos; }
 
     public void setNome(String nome) {this.nome = nome;}
     public void setDescricao(String descricao) {this.descricao = descricao;}
@@ -70,4 +72,5 @@ public class Servicos {
     public void setQuantidadeDisponivel(Long quantidadeDisponivel) {this.quantidadeDisponivel = quantidadeDisponivel;}
     public void setUsuarios(Set<Usuarios> usuarios) {this.usuarios = usuarios;}
     public void setEstabelecimentos(Set<Estabelecimentos> estabelecimentos) {this.estabelecimentos = estabelecimentos;}
+    public void setAgendamentos(Set<Agendamentos> agendamentos) { this.agendamentos = agendamentos; }
 }
