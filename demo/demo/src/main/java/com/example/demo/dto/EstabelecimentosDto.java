@@ -1,12 +1,13 @@
 package com.example.demo.dto;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 public class EstabelecimentosDto {
     private Long id;
     private String nome;
     private Long localId;
-    private LocalDateTime dataCriacao;
+    private OffsetDateTime dataCriacao;
     private String linkImg;
     private Long categoriaId;
     private String senha;
@@ -15,7 +16,7 @@ public class EstabelecimentosDto {
 
     public EstabelecimentosDto() {}
 
-    public EstabelecimentosDto(Long id, String nome, Long localId, LocalDateTime dataCriacao, String linkImg, Long categoriaId, String senha, String telefone, String descricao) {
+    public EstabelecimentosDto(Long id, String nome, Long localId, OffsetDateTime dataCriacao, String linkImg, Long categoriaId, String senha, String telefone, String descricao) {
         this.id = id;
         this.nome = nome;
         this.localId = localId;
@@ -30,7 +31,7 @@ public class EstabelecimentosDto {
     public Long getId() {return id;}
     public String getNome() {return nome;}
     public Long getLocalId() {return localId;}
-    public LocalDateTime getDataCriacao() {return dataCriacao;}
+    public OffsetDateTime getDataCriacao() {return dataCriacao;}
     public String getLinkImg() {return linkImg;}
     public Long getCategoriaId() {return categoriaId;}
     public String getSenha() {return senha;}

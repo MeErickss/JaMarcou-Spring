@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public class Estabelecimentos {
     private Locais local;
 
     @Column(nullable = false)
-    private LocalDateTime dataCriacao;
+    private OffsetDateTime dataCriacao;
 
     @Column(nullable = false)
     private String senha;
@@ -61,7 +62,7 @@ public class Estabelecimentos {
 
     public Estabelecimentos() {}
 
-    public Estabelecimentos(Long id, String nome, Locais local, Set<Usuarios> usuarios, LocalDateTime dataCriacao,
+    public Estabelecimentos(Long id, String nome, Locais local, Set<Usuarios> usuarios, OffsetDateTime dataCriacao,
                             String senha, Categorias categoria, String linkImg, Set<Servicos> servicos, String telefone, String descricao) {
         this.id = id;
         this.nome = nome;
@@ -81,7 +82,7 @@ public class Estabelecimentos {
     public Long getId() {return id;}
     public String getNome() {return nome;}
     public String getSenha() {return senha;}
-    public LocalDateTime getDataCriacao() {return dataCriacao;}
+    public OffsetDateTime getDataCriacao() {return dataCriacao;}
     public String getLinkImg() {return linkImg;}
     public Categorias getCategoria() {return categoria;}
     public Locais getLocal() {return local;}
@@ -95,7 +96,7 @@ public class Estabelecimentos {
     public void setLocal(Locais local) {this.local = local;}
     public void setNome(String nome) {this.nome = nome;}
     public void setSenha(String senha) {this.senha = senha;}
-    public void setDataCriacao(LocalDateTime dataCriacao) {this.dataCriacao = dataCriacao;}
+    public void setDataCriacao(OffsetDateTime dataCriacao) {this.dataCriacao = dataCriacao;}
     public void setLinkImg(String linkImg) {this.linkImg = linkImg;}
     public void setUsuarios(Set<Usuarios> usuarios) {this.usuarios = usuarios;}
     public void setServicos(Set<Servicos> servicos) {this.servicos = servicos;}

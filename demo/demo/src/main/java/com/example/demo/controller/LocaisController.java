@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.EnderecoDto;
 import com.example.demo.dto.HorariosDto;
 import com.example.demo.dto.LocaisDto;
 import com.example.demo.model.Locais;
@@ -29,7 +30,7 @@ public class LocaisController {
     }
 
     @PostMapping
-    public void cadastrarLocais(@RequestParam LocaisDto dto) {
+    public void cadastrarLocais(@RequestParam EnderecoDto dto) {
         locaisService.cadastrarLocal(dto);
     }
 

@@ -1,14 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.CadastroDto;
-import com.example.demo.dto.EstabelecimentosDto;
+import com.example.demo.dto.*;
 import com.example.demo.model.*;
 import com.example.demo.model.enumeration.Funcoes;
+import com.example.demo.model.enumeration.StatusHorario;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.*;
 
 @Service
@@ -22,6 +23,9 @@ public class EstabelecimentosService {
 
     @Autowired
     private LocaisRepository locaisRepository;
+
+    @Autowired
+    private HorariosRepository horariosRepository;
 
     @Autowired
     private ServicosRepository servicosRepository;
@@ -39,7 +43,7 @@ public class EstabelecimentosService {
         return estabelecimentosRepository.findById(id);
     }
 
-    public void cadastrarEstabelecimento(Long categoriaId, Long localId, String linkImg, LocalDateTime dataCriacao, String nome, String senha, String telefone, String descricao) {
+    public void cadastrarEstabelecimento(Long categoriaId, Long localId, String linkImg, OffsetDateTime dataCriacao, String nome, String senha, String telefone, String descricao) {
         Categorias c = categoriasRepository.getReferenceById(categoriaId);
 
         Locais l = locaisRepository.getReferenceById(localId);
@@ -101,6 +105,61 @@ public class EstabelecimentosService {
 
     public void inserirEstabelecimento(CadastroDto dto) {
 
+        Categorias c = categoriasRepository.getReferenceById(dto.getCategoriaId());
+
+        Locais l = new Locais();
+
+        l.setCep(dto.getEndereco().getCep());
+        l.setComplemento(dto.getEndereco().getComplemento());
+        l.setBairro(dto.getEndereco().getBairro());
+        l.setCidade(dto.getEndereco().getCidade());
+        l.setEstado(dto.getEndereco().getEstado());
+        l.setRua(dto.getEndereco().getRua());
+        l.setNumero(dto.getEndereco().getNumero());
+
+        Locais savedLocal = locaisRepository.save(l);
+
+        Estabelecimentos e = new Estabelecimentos();
+
+        e.setCategoria(c);
+        e.setLocal(savedLocal);
+        e.setDataCriacao(dto.getDataCriacao());
+        e.setNome(dto.getNome());
+        e.setDescricao(dto.getDescricao());
+        e.setTelefone(dto.getTelefone());
+        e.setLinkImg(dto.getLinkImg());
+        e.setSenha(dto.getSenha());
+
+        Estabelecimentos savedEstabelecimento = estabelecimentosRepository.save(e);
+
+        Usuarios u = usuariosRepository.findByEmail(dto.getUsuarioLogin());
+
+        if (dto.getHorarios() != null) {
+            for (HorariosCadastroDto hDto : dto.getHorarios()) {
+
+                Horarios h = new Horarios();
+                h.setEstabelecimento(savedEstabelecimento);
+                h.setDataFim(hDto.getDataFim());
+                h.setUsuario(u);
+                h.setDiaSemana(hDto.getDiaSemana());
+                h.setDataInicio(hDto.getDataInicio());
+                h.setStatusHorario(StatusHorario.LIVRE);
+                horariosRepository.save(h);
+            }
+        }
+
+        if (dto.getServicos() != null) {
+            for (ServicosDto sDto : dto.getServicos()) {
+                Servicos s = new Servicos();
+                s.setNome(sDto.getNome());
+                s.setDescricao(sDto.getDescricao());
+                s.getUsuarios().add(u);
+                s.setValor(sDto.getValor());
+                s.setQuantidadeDisponivel(sDto.getQuantidadeDisponivel());
+                e.getServicos().add(s);
+                servicosRepository.save(s);
+            }
+        }
     }
 
     public void deleteEstabelecimento(Long id){

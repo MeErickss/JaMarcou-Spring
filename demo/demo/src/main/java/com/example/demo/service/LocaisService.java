@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.EnderecoDto;
 import com.example.demo.dto.LocaisDto;
 import com.example.demo.model.Categorias;
 import com.example.demo.model.Estabelecimentos;
@@ -31,25 +32,29 @@ public class LocaisService {
         return locaisRepository.findById(id);
     }
 
-    public void cadastrarLocal(Integer numero, String cep, String rua, String complemento, Double coordenadas){
+    public void cadastrarLocal(Integer numero, String cep, String rua, String complemento, String cidade, String Bairro, String estado){
 
         Locais local = new Locais();
         local.setCep(cep);
         local.setComplemento(complemento);
-        local.setCoordenadas(coordenadas);
         local.setRua(rua);
         local.setNumero(numero);
+        local.setBairro(Bairro);
+        local.setCidade(cidade);
+        local.setEstado(estado);
         locaisRepository.save(local);
     }
 
-    public void cadastrarLocal(LocaisDto dto){
+    public void cadastrarLocal(EnderecoDto dto){
 
         Locais local = new Locais();
         local.setCep(dto.getCep());
         local.setComplemento(dto.getComplemento());
-        local.setCoordenadas(dto.getCoordenadas());
         local.setRua(dto.getRua());
         local.setNumero(dto.getNumero());
+        local.setEstado(dto.getEstado());
+        local.setCidade(dto.getCidade());
+        local.setBairro(dto.getBairro());
         locaisRepository.save(local);
     }
 
@@ -59,7 +64,6 @@ public class LocaisService {
 
         local.setCep(dto.getCep());
         local.setComplemento(dto.getComplemento());
-        local.setCoordenadas(dto.getCoordenadas());
         local.setRua(dto.getRua());
         local.setNumero(dto.getNumero());
         locaisRepository.save(local);

@@ -23,29 +23,43 @@ public class Locais {
     private String complemento;
 
     @Column(nullable = false)
-    private Double coordenadas;
+    private String estado;
+
+    @Column(nullable = false)
+    private String cidade;
+
+    @Column(nullable = false)
+    private String bairro;
+
 
     public Locais() {}
 
-    public Locais(Long id, String cep, String rua, Integer numero, String complemento, Double coordenadas) {
+    public Locais(Long id, String cep, String rua, Integer numero, String complemento, String estado, String cidade, String bairro) {
         this.id = id;
         this.cep = cep;
         this.rua = rua;
         this.numero = numero;
         this.complemento = complemento;
-        this.coordenadas = coordenadas;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.estado = estado;
     }
 
     public Long getId() {return id;}
     public String getCep() {return cep;}
     public String getComplemento() {return complemento;}
-    public Double getCoordenadas() {return coordenadas;}
     public Integer getNumero() {return numero;}
     public String getRua() {return rua;}
+    public String getBairro() {return bairro;}
+    public String getCidade() {return cidade;}
+    public String getEstado() {return estado;}
 
     public void setCep(String cep) {this.cep = cep;}
     public void setComplemento(String complemento) {this.complemento = complemento;}
-    public void setCoordenadas(Double coordenadas) {this.coordenadas = coordenadas;}
     public void setRua(String rua) {this.rua = rua;}
     public void setNumero(Integer numero) {this.numero = numero;}
+    public void setBairro(String bairro) {this.bairro = bairro;}
+    public void setCidade(String cidade) {this.cidade = cidade;}
+    public void setEstado(String estado) {this.estado = estado;}
+
 }

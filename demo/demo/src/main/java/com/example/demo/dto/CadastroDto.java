@@ -15,10 +15,11 @@ public class CadastroDto {
     private String telefone;
     private String descricao;
     private List<ServicosDto> servicos;
+    private String usuarioLogin;
 
     public CadastroDto() {}
 
-    public CadastroDto(String nome, EnderecoDto endereco, List<HorariosCadastroDto> horarios, List<ServicosDto> servicos, OffsetDateTime dataCriacao, String linkImg, Long categoriaId, String senha, String telefone, String descricao) {
+    public CadastroDto(String nome, EnderecoDto endereco, List<HorariosCadastroDto> horarios, String usuarioLogin, List<ServicosDto> servicos, OffsetDateTime dataCriacao, String linkImg, Long categoriaId, String senha, String telefone, String descricao) {
         this.nome = nome;
         this.endereco = endereco;
         this.dataCriacao = dataCriacao;
@@ -29,6 +30,7 @@ public class CadastroDto {
         this.descricao = descricao;
         this.servicos = servicos;
         this.horarios = horarios;
+        this.usuarioLogin = usuarioLogin;
     }
 
     public String getNome() {return nome;}
@@ -41,4 +43,5 @@ public class CadastroDto {
     public List<HorariosCadastroDto> getHorarios() {return horarios;}
     public List<ServicosDto> getServicos() {return servicos;}
     public OffsetDateTime getDataCriacao() {return dataCriacao;}
+    public String getUsuarioLogin() {return usuarioLogin;}
 }

@@ -6,17 +6,15 @@ public class LocaisDto {
     private String rua;
     private Integer numero;
     private String complemento;
-    private Double coordenadas;
 
     public LocaisDto() {}
 
-    public LocaisDto(Long id, String cep, String rua, Integer numero, String complemento, Double coordenadas) {
+    public LocaisDto(Long id, String cep, String rua, Integer numero, String complemento) {
         this.id = id;
         this.cep = cep;
         this.rua = rua;
         this.numero = numero;
         this.complemento = complemento;
-        this.coordenadas = coordenadas;
     }
 
     public Long getId() { return id; }
@@ -24,5 +22,4 @@ public class LocaisDto {
     public String getRua() { return rua; }
     public Integer getNumero() { return numero; }
     public String getComplemento() { return complemento; }
-    public Double getCoordenadas() { return coordenadas; }
 }

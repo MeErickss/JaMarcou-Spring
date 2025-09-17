@@ -7,10 +7,10 @@ public class EnderecoDto {
     private String cidade;
     private String bairro;
     private String rua;
-    private String numero;
+    private Integer numero;
     private String complemento;
 
-    public EnderecoDto(String cep, String estado, String cidade, String bairro, String rua, String numero, String complemento){
+    public EnderecoDto(String cep, String estado, String cidade, String bairro, String rua, Integer numero, String complemento){
         this.cep = cep;
         this.estado = estado;
         this.cidade = cidade;
@@ -21,7 +21,7 @@ public class EnderecoDto {
     }
 
     public String getRua() {return rua;}
-    public String getNumero() {return numero;}
+    public Integer getNumero() {return numero;}
     public String getComplemento() {return complemento;}
     public String getCep() {return cep;}
     public String getBairro() {return bairro;}
