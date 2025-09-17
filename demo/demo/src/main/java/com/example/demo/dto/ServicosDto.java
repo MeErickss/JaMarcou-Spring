@@ -9,19 +9,15 @@ public class ServicosDto {
     private Float valor;
     private String descricao;
     private Long quantidadeDisponivel;
-    private EstabelecimentosDto estabelecimento;
-    private Set<UsuariosDto> usuarios;
 
     public ServicosDto() {}
 
-    public ServicosDto(Long id, String nome, Float valor, String descricao, Long quantidadeDisponivel, EstabelecimentosDto estabelecimento, Set<UsuariosDto> usuarios) {
+    public ServicosDto(Long id, String nome, Float valor, String descricao, Long quantidadeDisponivel) {
         this.id = id;
         this.nome = nome;
         this.valor = valor;
         this.descricao = descricao;
         this.quantidadeDisponivel = quantidadeDisponivel;
-        this.estabelecimento = estabelecimento;
-        this.usuarios = usuarios;
     }
 
     public Long getId() { return id; }
@@ -29,6 +25,4 @@ public class ServicosDto {
     public Float getValor() { return valor; }
     public String getDescricao() { return descricao; }
     public Long getQuantidadeDisponivel() { return quantidadeDisponivel; }
-    public EstabelecimentosDto getEstabelecimento() { return estabelecimento; }
-    public Set<UsuariosDto> getUsuarios() { return usuarios; }
 }

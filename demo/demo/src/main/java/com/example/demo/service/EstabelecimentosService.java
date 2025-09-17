@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CadastroDto;
 import com.example.demo.dto.EstabelecimentosDto;
 import com.example.demo.model.*;
 import com.example.demo.model.enumeration.Funcoes;
@@ -96,6 +97,10 @@ public class EstabelecimentosService {
         e.setUsuarios(new HashSet<>());
         e.setServicos(new HashSet<>());
         estabelecimentosRepository.save(e);
+    }
+
+    public void inserirEstabelecimento(CadastroDto dto) {
+
     }
 
     public void deleteEstabelecimento(Long id){

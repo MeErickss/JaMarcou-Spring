@@ -1,10 +1,12 @@
 package com.example.demo.model;
 
+import com.example.demo.model.enumeration.DiasSemana;
 import com.example.demo.model.enumeration.StatusHorario;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,14 +19,17 @@ public class Horarios {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime dataInicio;
+    private DiasSemana diaSemana;
 
     @Column(nullable = false)
-    private LocalDateTime dataFim;
+    private Timestamp dataInicio;
+
+    @Column(nullable = false)
+    private Timestamp dataFim;
 
     // campo 'usuario' representa qual usuário tem esse horário:
     @ManyToOne
-    @JoinColumn(name = "usuarios_id", nullable = false)
+    @JoinColumn(name = "usuarios_id", nullable = true)
     @JsonBackReference(value = "usuario-horario")
     private Usuarios usuario;
 
@@ -33,7 +38,7 @@ public class Horarios {
     @JsonIgnore
     private Estabelecimentos estabelecimento;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime dataMarcacao;
 
     @Column(nullable = false)
@@ -46,32 +51,35 @@ public class Horarios {
 
     public Horarios() {}
 
-    public Horarios(Long id, LocalDateTime dataInicio, LocalDateTime dataFim, Usuarios usuario, Estabelecimentos estabelecimento, LocalDateTime dataMarcacao, StatusHorario statusHorario) {
+    public Horarios(Long id, Timestamp dataInicio, Timestamp dataFim, DiasSemana diaSemana, Usuarios usuario, Estabelecimentos estabelecimento, LocalDateTime dataMarcacao, StatusHorario statusHorario) {
         this.id = id;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.usuario = usuario;
         this.estabelecimento = estabelecimento;
         this.dataMarcacao = dataMarcacao;
+        this.diaSemana = diaSemana;
         this.statusHorario = statusHorario;
     }
 
     public Long getId() { return id; }
-    public LocalDateTime getDataFim() { return dataFim; }
-    public LocalDateTime getDataInicio() { return dataInicio; }
+    public Timestamp getDataFim() { return dataFim; }
+    public Timestamp getDataInicio() { return dataInicio; }
     public LocalDateTime getDataMarcacao() { return dataMarcacao; }
     public Estabelecimentos getEstabelecimento() { return estabelecimento; }
     public StatusHorario getStatusHorario() { return statusHorario; }
     public Usuarios getUsuario() { return usuario; }
+    public DiasSemana getDiaSemana() {return diaSemana;}
 
     // novos getters/setters
     public Set<Agendamentos> getAgendamentos() { return agendamentos; }
     public void setAgendamentos(Set<Agendamentos> agendamentos) { this.agendamentos = agendamentos; }
 
-    public void setDataFim(LocalDateTime dataFim) { this.dataFim = dataFim; }
-    public void setDataInicio(LocalDateTime dataInicio) { this.dataInicio = dataInicio; }
+    public void setDataFim(Timestamp dataFim) { this.dataFim = dataFim; }
+    public void setDataInicio(Timestamp dataInicio) { this.dataInicio = dataInicio; }
     public void setDataMarcacao(LocalDateTime dataMarcacao) { this.dataMarcacao = dataMarcacao; }
     public void setEstabelecimento(Estabelecimentos estabelecimento) { this.estabelecimento = estabelecimento; }
     public void setStatusHorario(StatusHorario statusHorario) { this.statusHorario = statusHorario; }
     public void setUsuario(Usuarios usuario) { this.usuario = usuario; }
+    public void setDiaSemana(DiasSemana diaSemana) {this.diaSemana = diaSemana;}
 }

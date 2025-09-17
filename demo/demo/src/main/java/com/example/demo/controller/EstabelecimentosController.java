@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CadastroDto;
 import com.example.demo.dto.EstabelecimentosDto;
 import com.example.demo.model.Estabelecimentos;
 import com.example.demo.repository.EstabelecimentosRepository;
@@ -30,6 +31,11 @@ public class EstabelecimentosController {
     @PostMapping
     public void cadastrarEstabelecimentos(@RequestBody EstabelecimentosDto dto) {
         estabelecimentosService.cadastrarEstabelecimento(dto);
+    }
+
+    @PostMapping("/cadastro")
+    public void cadastrarEstabelecimentos(@RequestBody CadastroDto dto) {
+        estabelecimentosService.inserirEstabelecimento(dto);
     }
 
     @PutMapping

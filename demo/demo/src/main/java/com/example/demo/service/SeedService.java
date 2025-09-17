@@ -1,15 +1,13 @@
 package com.example.demo.service;
 
-import com.example.demo.model.enumeration.FormaPagamento;
-import com.example.demo.model.enumeration.Funcoes;
-import com.example.demo.model.enumeration.StatusHorario;
-import com.example.demo.model.enumeration.TipoPagamento;
+import com.example.demo.model.enumeration.*;
 import com.example.demo.repository.CategoriasRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -107,17 +105,16 @@ public class SeedService implements ApplicationRunner {
         usuariosService.cadastrarUsuario(LocalDateTime.of(1992, 5, 5, 0, 0), "20202020202", 2L, "https://via.placeholder.com/100", "Juliana", "123", "Pinto", "ATIVO","juliana@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
 
         // ===================== HORÁRIOS (adicionais para agendamentos) =====================
-        horariosService.cadastrarHorario(StatusHorario.AGENDADO, LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(2).plusHours(1), LocalDateTime.now(), 1L, 1L);
-        horariosService.cadastrarHorario(StatusHorario.AGENDADO, LocalDateTime.now().plusDays(3), LocalDateTime.now().plusDays(3).plusHours(1), LocalDateTime.now(), 1L, 2L);
-        horariosService.cadastrarHorario(StatusHorario.AGENDADO, LocalDateTime.now().plusDays(4), LocalDateTime.now().plusDays(4).plusHours(1), LocalDateTime.now(), 2L, 3L);
-        horariosService.cadastrarHorario(StatusHorario.AGENDADO, LocalDateTime.now().plusDays(5), LocalDateTime.now().plusDays(5).plusHours(1), LocalDateTime.now(), 2L, 4L);
-        horariosService.cadastrarHorario(StatusHorario.AGENDADO, LocalDateTime.now().plusDays(6), LocalDateTime.now().plusDays(6).plusHours(1), LocalDateTime.now(), 3L, 5L);
-        horariosService.cadastrarHorario(StatusHorario.CONCLUIDO, LocalDateTime.now().minusDays(1), LocalDateTime.now().minusDays(1).plusHours(1), LocalDateTime.now().minusDays(1), 3L, 6L);
-        horariosService.cadastrarHorario(StatusHorario.CANCELADO, LocalDateTime.now().minusDays(2), LocalDateTime.now().minusDays(2).plusHours(1), LocalDateTime.now().minusDays(2), 4L, 7L);
-        horariosService.cadastrarHorario(StatusHorario.AGENDADO, LocalDateTime.now().plusDays(7), LocalDateTime.now().plusDays(7).plusHours(1), LocalDateTime.now(), 4L, 1L);
-        horariosService.cadastrarHorario(StatusHorario.AGENDADO, LocalDateTime.now().plusDays(8), LocalDateTime.now().plusDays(8).plusHours(1), LocalDateTime.now(), 5L, 2L);
-        horariosService.cadastrarHorario(StatusHorario.AGENDADO, LocalDateTime.now().plusDays(9), LocalDateTime.now().plusDays(9).plusHours(1), LocalDateTime.now(), 5L, 3L);
-
+        horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(2)), Timestamp.valueOf(LocalDateTime.now().plusDays(2).plusHours(1)), LocalDateTime.now(), 1L, 1L, DiasSemana.SEGUNDA);
+        horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(3)), Timestamp.valueOf(LocalDateTime.now().plusDays(3).plusHours(1)), LocalDateTime.now(), 1L, 2L, DiasSemana.TERCA);
+        horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(4)), Timestamp.valueOf(LocalDateTime.now().plusDays(4).plusHours(1)), LocalDateTime.now(), 2L, 3L, DiasSemana.QUARTA);
+        horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(5)), Timestamp.valueOf(LocalDateTime.now().plusDays(5).plusHours(1)), LocalDateTime.now(), 2L, 4L, DiasSemana.QUINTA);
+        horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(6)), Timestamp.valueOf(LocalDateTime.now().plusDays(6).plusHours(1)), LocalDateTime.now(), 3L, 5L, DiasSemana.SEXTA);
+        horariosService.cadastrarHorario(StatusHorario.CONCLUIDO, Timestamp.valueOf(LocalDateTime.now().minusDays(1)), Timestamp.valueOf(LocalDateTime.now().minusDays(1).plusHours(1)), LocalDateTime.now().minusDays(1), 3L, 6L, DiasSemana.SABADO);
+        horariosService.cadastrarHorario(StatusHorario.CANCELADO, Timestamp.valueOf(LocalDateTime.now().minusDays(2)), Timestamp.valueOf(LocalDateTime.now().minusDays(2).plusHours(1)), LocalDateTime.now().minusDays(2), 4L, 7L, DiasSemana.DOMINGO);
+        horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(7)), Timestamp.valueOf(LocalDateTime.now().plusDays(7).plusHours(1)), LocalDateTime.now(), 4L, 1L, DiasSemana.SEGUNDA);
+        horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(8).plusHours(1)), Timestamp.valueOf(LocalDateTime.now().plusDays(8)), LocalDateTime.now(), 5L, 2L, DiasSemana.TERCA);
+        horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(9)), Timestamp.valueOf(LocalDateTime.now().plusDays(9).plusHours(1)), LocalDateTime.now(), 5L, 3L, DiasSemana.QUARTA);
         // ===================== PAGAMENTOS =====================
         pagamentosService.cadastrarPagamentos(FormaPagamento.CARTAO, 1L, TipoPagamento.AVISTA, 150.0f, LocalDateTime.now(), "PG001");
         pagamentosService.cadastrarPagamentos(FormaPagamento.PIX, 2L, TipoPagamento.AVISTA, 200.0f, LocalDateTime.now(), "PG002");
