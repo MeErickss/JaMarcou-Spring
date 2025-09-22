@@ -48,7 +48,6 @@ public class Usuarios {
     @Enumerated(EnumType.STRING)
     private Set<Funcoes> funcoes = new HashSet<>();
 
-
     @ManyToOne
     @JoinColumn(name = "estabelecimento_id", nullable = false)
     @JsonIgnore
@@ -70,10 +69,14 @@ public class Usuarios {
     @JsonBackReference(value = "funcionario-agendamentos")
     private Set<Agendamentos> agendamentosComoFuncionario = new HashSet<>();
 
+    @ManyToMany(mappedBy = "listaNegra")
+    @JsonBackReference(value = "estabelecimento-lista-negra")
+    private Set<Estabelecimentos> estabelecimentosQueNegaram = new HashSet<>();
+
     public Usuarios() {}
 
     public Usuarios(Long id, String nome, String email, Estabelecimentos estabelecimento, String sobrenome, String cpf,
-                    String senha, Set<Funcoes> funcoes, Set<Servicos> servicos, LocalDateTime dataNascimento, String linkImagem, String statusUsuario) {
+                    String senha, Set<Funcoes> funcoes, Set<Estabelecimentos> estabelecimentosQueNegaram, Set<Servicos> servicos, LocalDateTime dataNascimento, String linkImagem, String statusUsuario) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -86,6 +89,7 @@ public class Usuarios {
         this.estabelecimento = estabelecimento;
         this.servicos = servicos;
         this.funcoes = funcoes;
+        this.estabelecimentosQueNegaram = estabelecimentosQueNegaram;
     }
 
     // getters/setters originais...
@@ -102,6 +106,7 @@ public class Usuarios {
     public Estabelecimentos getEstabelecimento() { return estabelecimento; }
     public Set<Horarios> getHorarios() { return horarios; }
     public Set<Funcoes> getFuncoes() {return funcoes;}
+    public Set<Estabelecimentos> getEstabelecimentosQueNegaram() {return estabelecimentosQueNegaram;}
 
     // novos getters/setters
     public Set<Agendamentos> getAgendamentosComoCliente() { return agendamentosComoCliente; }
@@ -123,4 +128,5 @@ public class Usuarios {
     public void setEstabelecimento(Estabelecimentos estabelecimento) { this.estabelecimento = estabelecimento; }
     public void setHorarios(Set<Horarios> horarios) { this.horarios = horarios; }
     public void setFuncoes(Set<Funcoes> funcoes) {this.funcoes = funcoes;}
+    public void setEstabelecimentosQueNegaram(Set<Estabelecimentos> estabelecimentosQueNegaram) {this.estabelecimentosQueNegaram = estabelecimentosQueNegaram;}
 }

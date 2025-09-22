@@ -24,4 +24,14 @@ public interface AgendamentosRepository extends JpaRepository<Agendamentos, Long
             "WHERE a.cliente.id = :userId OR a.funcionario.id = :userId")
     List<Agendamentos> findByUsuarioId(@Param("userId") Long userId);
 
+    @Query("SELECT DISTINCT a FROM Agendamentos a " +
+            "JOIN FETCH a.servico s " +
+            "JOIN FETCH a.estabelecimento e " +
+            "JOIN FETCH a.horario h " +
+            "LEFT JOIN FETCH a.cliente c " +
+            "LEFT JOIN FETCH a.funcionario f " +
+            "JOIN e.usuarios u " +
+            "WHERE u.id = :managerId")
+    List<Agendamentos> findAllByGerenteId(@Param("managerId") Long managerId);
+
 }

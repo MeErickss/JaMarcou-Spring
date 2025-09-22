@@ -29,8 +29,14 @@ public class AgendamentosController {
     }
 
     @GetMapping("/{id:\\d+}")
-    public ResponseEntity<List<Agendamentos>> listarAgendamentosUsuario(@PathVariable Long id) {
+    public ResponseEntity<List<Agendamentos>> listarAgendamentosCliente(@PathVariable Long id) {
         List<Agendamentos> agendamentos = agendamentosRepository.findByUsuarioId(id);
+        return ResponseEntity.ok(agendamentos);
+    }
+
+    @GetMapping("/gerente/{id:\\d+}")
+    public ResponseEntity<List<Agendamentos>> listarAgendamentosGerente(@PathVariable Long id) {
+        List<Agendamentos> agendamentos = agendamentosRepository.findAllByGerenteId(id);
         return ResponseEntity.ok(agendamentos);
     }
 

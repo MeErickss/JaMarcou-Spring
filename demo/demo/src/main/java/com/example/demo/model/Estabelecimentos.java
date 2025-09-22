@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.model.enumeration.Funcoes;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -60,10 +61,19 @@ public class Estabelecimentos {
     @Column(nullable = false)
     private String descricao;
 
+    @ManyToMany
+    @JoinTable(
+            name = "estabelecimentos_lista_negra",
+            joinColumns = @JoinColumn(name = "estabelecimento_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    @JsonManagedReference(value = "estabelecimento-lista-negra")
+    private Set<Usuarios> listaNegra = new HashSet<>();
+
     public Estabelecimentos() {}
 
     public Estabelecimentos(Long id, String nome, Locais local, Set<Usuarios> usuarios, OffsetDateTime dataCriacao,
-                            String senha, Categorias categoria, String linkImg, Set<Servicos> servicos, String telefone, String descricao) {
+                            String senha, Set<Usuarios> listaNegra, Categorias categoria, String linkImg, Set<Servicos> servicos, String telefone, String descricao) {
         this.id = id;
         this.nome = nome;
         this.local = local;
@@ -75,6 +85,7 @@ public class Estabelecimentos {
         this.servicos = servicos;
         this.telefone = telefone;
         this.descricao = descricao;
+        this.listaNegra = listaNegra;
     }
 
     // getters/setters originais...
@@ -91,6 +102,7 @@ public class Estabelecimentos {
     public String getTelefone() {return telefone;}
     public Set<Agendamentos> getAgendamentos() { return agendamentos; }
     public String getDescricao() {return descricao;}
+    public Set<Usuarios> getListaNegra() {return listaNegra;}
 
     public void setCategoria(Categorias categoria) {this.categoria = categoria;}
     public void setLocal(Locais local) {this.local = local;}
@@ -103,4 +115,5 @@ public class Estabelecimentos {
     public void setTelefone(String telefone) {this.telefone = telefone;}
     public void setAgendamentos(Set<Agendamentos> agendamentos) { this.agendamentos = agendamentos; }
     public void setDescricao(String descricao) {this.descricao = descricao;}
+    public void setListaNegra(Set<Usuarios> listaNegra) {this.listaNegra = listaNegra;}
 }
