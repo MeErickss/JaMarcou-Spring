@@ -6,5 +6,5 @@ public enum StatusHorario {
     AGENDADO,
     CONCLUIDO,
     CANCELADO,
-
+    ABSENTISMO,
 }

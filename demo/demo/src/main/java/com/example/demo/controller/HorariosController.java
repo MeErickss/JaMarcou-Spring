@@ -45,4 +45,24 @@ public class HorariosController {
         Object[] horario = horariosRepository.findMinStartAndMaxEndByEstabelecimentoId(id);
         return ResponseEntity.ok(horario);
     }
+
+    @PutMapping("/reservar")
+    public void reservarHorarios(@RequestParam HorariosDto dto){
+        horariosService.atualizarHorario(dto);
+    }
+
+    @PutMapping("/confirmar")
+    public void confirmarHorarios(@RequestParam HorariosDto dto){
+        horariosService.atualizarHorario(dto);
+    }
+
+    @PutMapping("/absentismo")
+    public void absentismoHorarios(@RequestParam HorariosDto dto){
+        horariosService.atualizarHorario(dto);
+    }
+
+    @DeleteMapping
+    public void deletarHorarios(@RequestParam HorariosDto dto){
+        horariosService.deletarHorario(dto.getId());
+    }
 }
