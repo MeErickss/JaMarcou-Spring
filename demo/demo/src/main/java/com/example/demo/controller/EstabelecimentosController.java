@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.dto.CadastroDto;
 import com.example.demo.dto.EstabelecimentosDto;
 import com.example.demo.model.Estabelecimentos;
+import com.example.demo.model.Usuarios;
+import com.example.demo.model.enumeration.Funcoes;
 import com.example.demo.repository.EstabelecimentosRepository;
 import com.example.demo.service.EstabelecimentosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class EstabelecimentosController {
     }
 
     @PutMapping
-    public void atualizarEstabelecimentos(@RequestParam EstabelecimentosDto dto){
+    public void atualizarEstabelecimentos(@RequestBody EstabelecimentosDto dto){
         estabelecimentosService.atualizarEstabelecimento(dto);
     }
 
@@ -59,6 +61,12 @@ public class EstabelecimentosController {
     @GetMapping("/gerente/{id:\\d+}")
     public ResponseEntity<List<Estabelecimentos>> listarGerente(@PathVariable Long id){
         List<Estabelecimentos> estabelecimento = estabelecimentosRepository.findEstabelecimentosOndeUsuarioEhGerente(id);
+        return ResponseEntity.ok(estabelecimento);
+    }
+
+    @GetMapping("/funcionarios/{id:\\d+}")
+    public ResponseEntity<List<Usuarios>> listarFuncionarios(@PathVariable Long id){
+        List<Usuarios> estabelecimento = estabelecimentosRepository.findFuncionariosDoEstabelecimentoDoGerente(id, Funcoes.FUNCIONARIO);
         return ResponseEntity.ok(estabelecimento);
     }
 

@@ -88,18 +88,12 @@ public class EstabelecimentosService {
 
         Categorias c = categoriasRepository.getReferenceById(dto.getCategoriaId());
 
-        Locais l = locaisRepository.getReferenceById(dto.getLocalId());
-
 
         e.setCategoria(c);
-        e.setDataCriacao(dto.getDataCriacao());
         e.setNome(dto.getNome());
-        e.setLocal(l);
         e.setLinkImg(dto.getLinkImg());
         e.setTelefone(dto.getTelefone());
         e.setSenha(dto.getSenha());
-        e.setUsuarios(new HashSet<>());
-        e.setServicos(new HashSet<>());
         estabelecimentosRepository.save(e);
     }
 

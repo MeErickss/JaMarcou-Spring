@@ -46,6 +46,11 @@ public class HorariosController {
         return ResponseEntity.ok(horario);
     }
 
+    @GetMapping("/estabelecimento/{usuarioId}")
+    public List<Horarios> listarTodosEstabelecimento(@PathVariable Long usuarioId) {
+        return horariosRepository.findHorariosByEstabelecimentoOfUsuario(usuarioId);
+    }
+
     @PutMapping("/reservar")
     public void reservarHorarios(@RequestParam HorariosDto dto){
         horariosService.atualizarHorario(dto);

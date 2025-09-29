@@ -2,6 +2,8 @@ package com.example.demo.repository;
 
 import com.example.demo.model.Categorias;
 import com.example.demo.model.Estabelecimentos;
+import com.example.demo.model.Usuarios;
+import com.example.demo.model.enumeration.Funcoes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,5 +25,13 @@ public interface EstabelecimentosRepository extends JpaRepository<Estabeleciment
             "JOIN u.funcoes f " +
             "WHERE u.id = :userId AND f = com.example.demo.model.enumeration.Funcoes.GERENTE")
     List<Estabelecimentos> findEstabelecimentosOndeUsuarioEhGerente(@Param("userId") Long userId);
+
+    @Query("select u from Usuarios u " +
+            "where u.estabelecimento.id = (" +
+            "  select g.estabelecimento.id from Usuarios g where g.id = :gerenteId" +
+            ") and :requiredRole MEMBER OF u.funcoes")
+    List<Usuarios> findFuncionariosDoEstabelecimentoDoGerente(@Param("gerenteId") Long gerenteId,
+                                                              @Param("requiredRole") Funcoes requiredRole);
+
 
 }
