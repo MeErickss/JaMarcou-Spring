@@ -85,6 +85,11 @@ public class SeedService implements ApplicationRunner {
         estabelecimentosService.cadastrarEstabelecimento(3L, 3L, "https://images.squarespace-cdn.com/content/v1/5b8962ea4eddec1828a9ee2b/0269b17e-d2bf-471f-9352-f8a47812c4f0/Facial-providence-ri.jpg", OffsetDateTime.now(), "Spa Facial", "123456", "44 99809-1064","a");
         estabelecimentosService.cadastrarEstabelecimento(4L, 4L, "https://images.unsplash.com/photo-1629909613654-28e377c37b09?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2xpbmljfGVufDB8fDB8fHww", OffsetDateTime.now(), "Clínica Corpo & Saúde", "123456", "44 99809-1064","a");
         estabelecimentosService.cadastrarEstabelecimento(5L, 5L, "https://images.squarespace-cdn.com/content/v1/5f2864b6ee63644ee0b157d3/1700953967219-ZG5U9WWAORHK4P0M9PON/Massage+therapist+doing+massage+for+a+woman.jpg", OffsetDateTime.now(), "Massagens Relax", "123456", "44 99809-1064","a");
+        estabelecimentosService.cadastrarEstabelecimento(6L, 1L, "https://images.unsplash.com/photo-1556228720-1b3f9d6a2b5d?fm=jpg&q=60&w=3000", OffsetDateTime.now(), "Studio Beleza Plus", "123456", "44 99809-1000","a");
+        estabelecimentosService.cadastrarEstabelecimento(7L, 2L, "https://images.unsplash.com/photo-1581579189044-1f1b9d8c3c1b?fm=jpg&q=60&w=3000", OffsetDateTime.now(), "Clinique Estética", "123456", "44 99809-1001","a");
+        estabelecimentosService.cadastrarEstabelecimento(2L, 3L, "https://images.unsplash.com/photo-1524758631624-e2822e304c36?fm=jpg&q=60&w=3000", OffsetDateTime.now(), "Hair & Spa", "123456", "44 99809-1002","a");
+        estabelecimentosService.cadastrarEstabelecimento(1L, 4L, "https://images.unsplash.com/photo-1506084868230-bb9d95c24759?fm=jpg&q=60&w=3000", OffsetDateTime.now(), "Depilart Clínica", "123456", "44 99809-1003","a");
+        estabelecimentosService.cadastrarEstabelecimento(3L, 5L, "https://images.unsplash.com/photo-1542317854-5f4d8f3f9d6b?fm=jpg&q=60&w=3000", OffsetDateTime.now(), "Relax & Massagem", "123456", "44 99809-1004","a");
 
         // ===================== USUÁRIOS (originais) =====================
         usuariosService.cadastrarUsuario(LocalDateTime.of(2000, 1, 1, 0, 0), "11111111111", 1L, "https://via.placeholder.com/100", "João", "123", "Silva", "ATIVO","joao@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
@@ -106,6 +111,18 @@ public class SeedService implements ApplicationRunner {
         usuariosService.cadastrarUsuario(LocalDateTime.of(1998, 1, 25, 0, 0), "18181818181", 5L, "https://via.placeholder.com/100", "Patrícia", "123", "Gomes", "ATIVO","patricia@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
         usuariosService.cadastrarUsuario(LocalDateTime.of(1984, 8, 9, 0, 0), "19191919191", 1L, "https://via.placeholder.com/100", "André", "123", "Ribeiro", "ATIVO","andre@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
         usuariosService.cadastrarUsuario(LocalDateTime.of(1992, 5, 5, 0, 0), "20202020202", 2L, "https://via.placeholder.com/100", "Juliana", "123", "Pinto", "ATIVO","juliana@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1990, 1, 2, 0, 0), "20202020202", 1L, "https://via.placeholder.com/100", "Marcelo", "123", "Oliveira", "ATIVO","marcelo20@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1987, 2, 3, 0, 0), "21212121212", 1L, "https://via.placeholder.com/100", "Paula", "123", "Moreira", "ATIVO","paula21@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1993, 3, 4, 0, 0), "22222222223", 2L, "https://via.placeholder.com/100", "Thierry", "123", "Cunha", "ATIVO","thierry22@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1995, 4, 5, 0, 0), "23232323232", 2L, "https://via.placeholder.com/100", "Larissa", "123", "Pereira", "ATIVO","larissa23@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1989, 5, 6, 0, 0), "24242424242", 3L, "https://via.placeholder.com/100", "Gustavo", "123", "Barbosa", "ATIVO","gustavo24@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1991, 6, 7, 0, 0), "25252525252", 3L, "https://via.placeholder.com/100", "Renata", "123", "Alves", "ATIVO","renata25@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1997, 7, 8, 0, 0), "26262626262", 4L, "https://via.placeholder.com/100", "Eduardo", "123", "Melo", "ATIVO","eduardo26@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1992, 8, 9, 0, 0), "27272727272", 4L, "https://via.placeholder.com/100", "Camila", "123", "Azevedo", "ATIVO","camila27@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1988, 9, 10, 0, 0), "28282828282", 5L, "https://via.placeholder.com/100", "Robson", "123", "Cardozo", "ATIVO","robson28@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1994, 10, 11, 0, 0), "29292929292", 5L, "https://via.placeholder.com/100", "Aline", "123", "Vasconcelos", "ATIVO","aline29@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+        usuariosService.cadastrarUsuario(LocalDateTime.of(1996, 11, 12, 0, 0), "30303030303", 5L, "https://via.placeholder.com/100", "Bruna", "123", "Falcão", "ATIVO","bruna30@gmail.com", new HashSet<>(Set.of(Funcoes.CLIENTE)));
+
 
         // ===================== HORÁRIOS (adicionais para agendamentos) =====================
         horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(2)), Timestamp.valueOf(LocalDateTime.now().plusDays(2).plusHours(1)), LocalDateTime.now(), 1L, 1L, DiasSemana.SEGUNDA);
@@ -197,6 +214,42 @@ public class SeedService implements ApplicationRunner {
 
         estabelecimentosService.associarUsuario(17L, 5L); // Patrícia -> Massagens Relax (GERENTE)
         estabelecimentosService.associarUsuario(19L, 5L); // Juliana -> Massagens Relax (FUNCIONÁRIO)
+
+        estabelecimentosService.associarUsuario(20L, 6L); // Manager -> Estab 6
+        estabelecimentosService.associarUsuario(21L, 6L); // Func -> Estab 6
+
+        estabelecimentosService.associarUsuario(22L, 7L); // Manager -> Estab 7
+        estabelecimentosService.associarUsuario(23L, 7L); // Func -> Estab 7
+
+        estabelecimentosService.associarUsuario(24L, 8L); // Manager -> Estab 8
+        estabelecimentosService.associarUsuario(25L, 8L); // Func -> Estab 8
+
+        estabelecimentosService.associarUsuario(26L, 9L); // Manager -> Estab 9
+        estabelecimentosService.associarUsuario(27L, 9L); // Func -> Estab 9
+
+        estabelecimentosService.associarUsuario(28L, 10L); // Manager -> Estab 10
+        estabelecimentosService.associarUsuario(29L, 10L); // Func -> Estab 10
+
+        int dayOffset = 2; // começa em +2 dias para não colidir com existentes
+        for (long userId = 20L; userId <= 29L; userId++) {
+            long estabId = switch ((int) userId) {
+                case 20,21 -> 6L;
+                case 22,23 -> 7L;
+                case 24,25 -> 8L;
+                case 26,27 -> 9L;
+                case 28,29 -> 10L;
+                default -> 6L;
+            };
+
+
+            horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(dayOffset)), Timestamp.valueOf(LocalDateTime.now().plusDays(dayOffset).plusHours(1)), LocalDateTime.now(), estabId, userId, DiasSemana.SEGUNDA);
+            horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(dayOffset+1)), Timestamp.valueOf(LocalDateTime.now().plusDays(dayOffset+1).plusHours(1)), LocalDateTime.now(), estabId, userId, DiasSemana.TERCA);
+            horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(dayOffset+2)), Timestamp.valueOf(LocalDateTime.now().plusDays(dayOffset+2).plusHours(1)), LocalDateTime.now(), estabId, userId, DiasSemana.QUARTA);
+            horariosService.cadastrarHorario(StatusHorario.AGENDADO, Timestamp.valueOf(LocalDateTime.now().plusDays(dayOffset+3)), Timestamp.valueOf(LocalDateTime.now().plusDays(dayOffset+3).plusHours(1)), LocalDateTime.now(), estabId, userId, DiasSemana.QUINTA);
+
+
+            dayOffset += 1; // avança um dia a cada usuário para variar
+        }
 
         // ===================== AGENDAMENTOS (seed) =====================
         // OBS: Os IDs de usuários/horários/serviços considerados seguem a ordem de inserção acima.
