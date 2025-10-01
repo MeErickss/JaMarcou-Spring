@@ -20,10 +20,14 @@ public interface HorariosRepository extends JpaRepository<Horarios, Long> {
     @Query("SELECT MIN(h.dataInicio), MAX(h.dataFim) FROM Horarios h WHERE h.estabelecimento.id = :estabId")
     Object[] findMinStartAndMaxEndByEstabelecimentoId(@Param("estabId") Long estabId);
 
-    @Query("select h from Horarios h " +
+    @Query("select distinct h from Horarios h " +
+            "left join fetch h.usuario u " +
+            "left join fetch h.estabelecimento e " +
+            "left join fetch h.agendamentos a " +
+            "left join fetch a.cliente ac " +      // opcional: traz cliente do agendamento
+            "left join fetch a.funcionario af " +  // opcional: traz funcionario do agendamento
             "where h.estabelecimento.id = (" +
-            "  select u.estabelecimento.id from Usuarios u " +
-            "  where u.id = :userId" +
+            "  select u2.estabelecimento.id from Usuarios u2 where u2.id = :userId" +
             ")")
     List<Horarios> findHorariosByEstabelecimentoOfUsuario(@Param("userId") Long userId);
 }

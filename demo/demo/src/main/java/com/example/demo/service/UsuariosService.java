@@ -14,8 +14,10 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.time.LocalDateTime;
@@ -108,13 +110,13 @@ public class UsuariosService {
         Usuarios usuario = usuariosRepository.findByEmail(loginDto.getEmail());
 
         if (usuario == null) {
-            return null; // Usuário não encontrado
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas");
         }
 
         boolean senhaValida = passwordEncoder.matches(loginDto.getSenha(), usuario.getSenha());
 
-        if (!senhaValida) {
-            return null; // Senha inválida
+        if (senhaValida == false) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas");
         }
 
         // Gera o token JWT

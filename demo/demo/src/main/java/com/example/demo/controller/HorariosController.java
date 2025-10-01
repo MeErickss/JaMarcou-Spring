@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.EstabelecimentosDto;
 import com.example.demo.dto.HorariosDto;
 import com.example.demo.model.Horarios;
+import com.example.demo.model.enumeration.StatusHorario;
 import com.example.demo.repository.HorariosRepository;
 import com.example.demo.service.HorariosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,13 @@ public class HorariosController {
     }
 
     @PutMapping
-    public void atualizarHorarios(@RequestParam HorariosDto dto){
+    public void atualizarHorarios(@RequestBody HorariosDto dto){
         horariosService.atualizarHorario(dto);
+    }
+
+    @PutMapping("/status/{id:\\d+}")
+    public Horarios atualizarStatusHorarios(@PathVariable Long id, @RequestBody StatusHorario statusHorario){
+        return horariosService.atualizarStatusHorario(id, statusHorario);
     }
 
     // 🔹 Buscar horário por ID
@@ -49,21 +55,6 @@ public class HorariosController {
     @GetMapping("/estabelecimento/{usuarioId}")
     public List<Horarios> listarTodosEstabelecimento(@PathVariable Long usuarioId) {
         return horariosRepository.findHorariosByEstabelecimentoOfUsuario(usuarioId);
-    }
-
-    @PutMapping("/reservar")
-    public void reservarHorarios(@RequestParam HorariosDto dto){
-        horariosService.atualizarHorario(dto);
-    }
-
-    @PutMapping("/confirmar")
-    public void confirmarHorarios(@RequestParam HorariosDto dto){
-        horariosService.atualizarHorario(dto);
-    }
-
-    @PutMapping("/absentismo")
-    public void absentismoHorarios(@RequestParam HorariosDto dto){
-        horariosService.atualizarHorario(dto);
     }
 
     @DeleteMapping

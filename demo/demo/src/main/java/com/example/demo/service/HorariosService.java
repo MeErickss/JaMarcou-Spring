@@ -95,6 +95,14 @@ public class HorariosService {
         horariosRepository.save(h);
     }
 
+    public Horarios atualizarStatusHorario(Long id, StatusHorario statusHorario){
+
+        Horarios h = horariosRepository.getReferenceById(id);
+
+        h.setStatusHorario(statusHorario);
+        return horariosRepository.save(h);
+    }
+
     public void deletarHorario(Long id){
         Horarios h = horariosRepository.getReferenceById(id);
         horariosRepository.delete(h);
@@ -107,7 +115,7 @@ public class HorariosService {
 
     public void absentirHorario(Long id){
         Horarios h = horariosRepository.getReferenceById(id);
-        h.setStatusHorario(StatusHorario.ABSENTISMO);
+        h.setStatusHorario(StatusHorario.NOSHOW);
     }
 
     public void confirmarHorario(Long id){

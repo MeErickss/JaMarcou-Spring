@@ -43,9 +43,7 @@ public class UsuariosController {
     }
 
     @PostMapping("/login")
-    public LoginResponseDto validarLogin(@RequestBody LoginDto loginDto){
-        LoginResponseDto response = usuariosService.validarLogin(loginDto);
-
-        return response;
+    public ResponseEntity<?> validarLogin(@RequestBody LoginDto loginDto){
+        return ResponseEntity.ok(usuariosService.validarLogin(loginDto));
     }
 }
