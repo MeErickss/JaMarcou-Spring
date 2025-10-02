@@ -26,12 +26,18 @@ public interface EstabelecimentosRepository extends JpaRepository<Estabeleciment
             "WHERE u.id = :userId AND f = com.example.demo.model.enumeration.Funcoes.GERENTE")
     List<Estabelecimentos> findEstabelecimentosOndeUsuarioEhGerente(@Param("userId") Long userId);
 
-    @Query("select u from Usuarios u " +
-            "where u.estabelecimento.id = (" +
-            "  select g.estabelecimento.id from Usuarios g where g.id = :gerenteId" +
-            ") and :requiredRole MEMBER OF u.funcoes")
-    List<Usuarios> findFuncionariosDoEstabelecimentoDoGerente(@Param("gerenteId") Long gerenteId,
-                                                              @Param("requiredRole") Funcoes requiredRole);
+    @Query("""
+      SELECT u
+      FROM Usuarios u
+      WHERE u.estabelecimento = (
+        SELECT g.estabelecimento FROM Usuarios g WHERE g.id = :gerenteId
+      )
+      AND :funcRole MEMBER OF u.funcoes
+      AND u.id <> :gerenteId
+      """)
+    List<Usuarios> findFuncionariosDoEstabelecimentoDoGerente(
+            @Param("gerenteId") Long gerenteId,
+            @Param("funcRole") Funcoes funcRole);
 
 
 }
