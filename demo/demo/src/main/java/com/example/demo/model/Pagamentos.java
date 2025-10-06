@@ -30,19 +30,19 @@ public class Pagamentos {
     private TipoPagamento tipoPagamento;
 
     @OneToOne
-    @JoinColumn(name = "horarios_id", referencedColumnName = "id", nullable = false)
-    private Horarios horarios;
+    @JoinColumn(name = "horarios_id", referencedColumnName = "id", nullable = true)
+    private HorariosFuncionario horariosFuncionario;
 
     public Pagamentos() {}
 
-    public Pagamentos(Long id, String registro, LocalDateTime data, FormaPagamento formaPagamento, Float valor, TipoPagamento tipoPagamento, Horarios horarios) {
+    public Pagamentos(Long id, String registro, LocalDateTime data, FormaPagamento formaPagamento, Float valor, TipoPagamento tipoPagamento, HorariosFuncionario horariosFuncionario) {
         this.id = id;
         this.registro = registro;
         this.data = data;
         this.formaPagamento = formaPagamento;
         this.valor = valor;
         this.tipoPagamento = tipoPagamento;
-        this.horarios = horarios;
+        this.horariosFuncionario = horariosFuncionario;
     }
 
     public Long getId() {return id;}
@@ -50,7 +50,7 @@ public class Pagamentos {
     public FormaPagamento getFormaPagamento() {return formaPagamento;}
     public String getRegistro() {return registro;}
     public Float getValor() {return valor;}
-    public Horarios getHorario() {return horarios;}
+    public HorariosFuncionario getHorario() {return horariosFuncionario;}
     public TipoPagamento getTipoPagamento() {return tipoPagamento;}
 
 
@@ -58,6 +58,6 @@ public class Pagamentos {
     public void setFormaPagamento(FormaPagamento formaPagamento) {this.formaPagamento = formaPagamento;}
     public void setRegistro(String registro) {this.registro = registro;}
     public void setValor(Float valor) {this.valor = valor;}
-    public void setHorario(Horarios horarios) {this.horarios = horarios;}
+    public void setHorario(HorariosFuncionario horariosFuncionario) {this.horariosFuncionario = horariosFuncionario;}
     public void setTipoPagamento(TipoPagamento tipoPagamento) {this.tipoPagamento = tipoPagamento;}
 }

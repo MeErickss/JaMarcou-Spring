@@ -44,8 +44,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // Ignora endpoints públicos, como login ou cadastro
         String path = request.getRequestURI();
         return path.equals("/api/usuarios/login")
-                || path.equals("/api/usuarios")
-                || path.equals("/api/horarios")
                 || path.equals("/")
                 || path.startsWith("/h2-console");
     }

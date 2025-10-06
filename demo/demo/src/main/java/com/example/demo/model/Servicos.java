@@ -27,50 +27,44 @@ public class Servicos {
     @Column(nullable = false)
     private Long quantidadeDisponivel;
 
-    @ManyToMany
-    @JoinTable(
-            name = "usuarios_servicos", // tabela intermediária
-            joinColumns = @JoinColumn(name = "servico_id"),
-            inverseJoinColumns = @JoinColumn(name = "usuario_id")
-    )
-    @JsonManagedReference // evita recursão infinita ao serializar
-    private Set<Usuarios> usuarios = new HashSet<>();
+    // cada serviço pertence a UM estabelecimento
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "estabelecimento_id", nullable = false)
+    @JsonBackReference(value = "estabelecimento-servicos")
+    private Estabelecimentos estabelecimento;
 
-    @ManyToMany(mappedBy = "servicos")
-    @JsonIgnore
-    private Set<Estabelecimentos> estabelecimentos = new HashSet<>();
-
-    // NOVO: agendamentos que usam este servico
-    @OneToMany(mappedBy = "servico", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference(value = "servico-agendamentos")
-    private Set<Agendamentos> agendamentos = new HashSet<>();
+    // cada serviço é prestado por UM funcionário (OBRIGATÓRIO no seu domínio)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "prestador_id", nullable = false)
+    @JsonBackReference(value = "funcionario-servicos")
+    private Funcionarios prestador;
 
     public Servicos() {}
 
-    public Servicos(Long id, String nome, Float valor, String descricao, Long quantidadeDisponivel, Set<Usuarios> usuarios, Set<Estabelecimentos> estabelecimentos) {
+    public Servicos(Long id, String nome, Float valor, String descricao, Long quantidadeDisponivel,
+                    Estabelecimentos estabelecimento, Funcionarios prestador) {
         this.id = id;
         this.nome = nome;
         this.valor = valor;
         this.descricao = descricao;
         this.quantidadeDisponivel = quantidadeDisponivel;
-        this.usuarios = usuarios;
-        this.estabelecimentos = estabelecimentos;
+        this.estabelecimento = estabelecimento;
+        this.prestador = prestador;
     }
 
-    public Long getId() {return id;}
-    public String getNome() {return nome;}
-    public String getDescricao() {return descricao;}
-    public Float getValor() {return valor;}
-    public Long getQuantidadeDisponivel() {return quantidadeDisponivel;}
-    public Set<Usuarios> getUsuarios() {return usuarios;}
-    public Set<Estabelecimentos> getEstabelecimentos() {return estabelecimentos;}
-    public Set<Agendamentos> getAgendamentos() { return agendamentos; }
+    // getters / setters
+    public Long getId() { return id; }
+    public String getNome() { return nome; }
+    public String getDescricao() { return descricao; }
+    public Float getValor() { return valor; }
+    public Long getQuantidadeDisponivel() { return quantidadeDisponivel; }
+    public Estabelecimentos getEstabelecimento() { return estabelecimento; }
+    public Funcionarios getPrestador() { return prestador; }
 
-    public void setNome(String nome) {this.nome = nome;}
-    public void setDescricao(String descricao) {this.descricao = descricao;}
-    public void setValor(Float valor) {this.valor = valor;}
-    public void setQuantidadeDisponivel(Long quantidadeDisponivel) {this.quantidadeDisponivel = quantidadeDisponivel;}
-    public void setUsuarios(Set<Usuarios> usuarios) {this.usuarios = usuarios;}
-    public void setEstabelecimentos(Set<Estabelecimentos> estabelecimentos) {this.estabelecimentos = estabelecimentos;}
-    public void setAgendamentos(Set<Agendamentos> agendamentos) { this.agendamentos = agendamentos; }
+    public void setNome(String nome) { this.nome = nome; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public void setValor(Float valor) { this.valor = valor; }
+    public void setQuantidadeDisponivel(Long quantidadeDisponivel) { this.quantidadeDisponivel = quantidadeDisponivel; }
+    public void setEstabelecimento(Estabelecimentos estabelecimento) { this.estabelecimento = estabelecimento; }
+    public void setPrestador(Funcionarios prestador) { this.prestador = prestador; }
 }

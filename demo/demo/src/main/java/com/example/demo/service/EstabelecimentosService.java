@@ -1,16 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.*;
 import com.example.demo.model.*;
-import com.example.demo.model.enumeration.Funcoes;
-import com.example.demo.model.enumeration.StatusHorario;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.HashSet;
 
 @Service
 public class EstabelecimentosService {
@@ -19,187 +15,45 @@ public class EstabelecimentosService {
     private EstabelecimentosRepository estabelecimentosRepository;
 
     @Autowired
-    private UsuariosRepository usuariosRepository;
-
-    @Autowired
     private LocaisRepository locaisRepository;
-
-    @Autowired
-    private HorariosRepository horariosRepository;
-
-    @Autowired
-    private ServicosRepository servicosRepository;
 
     @Autowired
     private CategoriasRepository categoriasRepository;
 
-    // Listar todos
-    public List<Estabelecimentos> listAllEstabelecimentos() {
-        return estabelecimentosRepository.findAll();
-    }
+    /**
+     * Cria um estabelecimento com parâmetros diretos (sem DTO).
+     * Categoria e Local são referenciados por ID.
+     */
+    public Estabelecimentos createEstabelecimento(Long categoriaId,
+                                                  Long localId,
+                                                  String nome,
+                                                  String cnpj,
+                                                  OffsetDateTime dataCriacao,
+                                                  String senha,
+                                                  String telefone,
+                                                  String linkImg,
+                                                  String descricao) {
 
-    // Buscar por ID
-    public Optional<Estabelecimentos> getEstabelecimentoById(Long id) {
-        return estabelecimentosRepository.findById(id);
-    }
-
-    public void cadastrarEstabelecimento(Long categoriaId, Long localId, String linkImg, OffsetDateTime dataCriacao, String nome, String senha, String telefone, String descricao) {
-        Categorias c = categoriasRepository.getReferenceById(categoriaId);
-
-        Locais l = locaisRepository.getReferenceById(localId);
-
+        Categorias c = categoriasRepository.findById(categoriaId)
+                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada: " + categoriaId));
+        Locais l = locaisRepository.findById(localId)
+                .orElseThrow(() -> new IllegalArgumentException("Local não encontrado: " + localId));
 
         Estabelecimentos e = new Estabelecimentos();
         e.setCategoria(c);
-        e.setDataCriacao(dataCriacao);
-        e.setNome(nome);
         e.setLocal(l);
-        e.setLinkImg(linkImg);
+        e.setNome(nome);
+        e.setCnpj(cnpj);
+        e.setDataCriacao(dataCriacao != null ? dataCriacao : OffsetDateTime.now());
         e.setSenha(senha);
         e.setTelefone(telefone);
-        e.setUsuarios(new HashSet<>());
-        e.setServicos(new HashSet<>());
+        e.setLinkImg(linkImg);
         e.setDescricao(descricao);
-        estabelecimentosRepository.save(e);
-    }
-
-    public void cadastrarEstabelecimento(EstabelecimentosDto dto) {
-        Categorias c = categoriasRepository.getReferenceById(dto.getCategoriaId());
-
-        Locais l = locaisRepository.getReferenceById(dto.getLocalId());
-
-
-        Estabelecimentos e = new Estabelecimentos();
-        e.setCategoria(c);
-        e.setDataCriacao(dto.getDataCriacao());
-        e.setNome(dto.getNome());
-        e.setLocal(l);
-        e.setLinkImg(dto.getLinkImg());
-        e.setTelefone(dto.getTelefone());
-        e.setSenha(dto.getSenha());
-        e.setUsuarios(new HashSet<>());
+        e.setGerentes(new HashSet<>());
+        e.setFuncionarios(new HashSet<>());
         e.setServicos(new HashSet<>());
-        e.setDescricao(dto.getDescricao());
-        estabelecimentosRepository.save(e);
+        e.setLocacoes(new HashSet<>());
+
+        return estabelecimentosRepository.save(e);
     }
-
-    public void atualizarEstabelecimento(EstabelecimentosDto dto) {
-        Estabelecimentos e = estabelecimentosRepository.getReferenceById(dto.getId());
-
-        Categorias c = categoriasRepository.getReferenceById(dto.getCategoriaId());
-
-
-        e.setCategoria(c);
-        e.setNome(dto.getNome());
-        e.setLinkImg(dto.getLinkImg());
-        e.setTelefone(dto.getTelefone());
-        e.setSenha(dto.getSenha());
-        estabelecimentosRepository.save(e);
-    }
-
-    public void inserirEstabelecimento(CadastroDto dto) {
-
-        Categorias c = categoriasRepository.getReferenceById(dto.getCategoriaId());
-
-        Locais l = new Locais();
-
-        l.setCep(dto.getEndereco().getCep());
-        l.setComplemento(dto.getEndereco().getComplemento());
-        l.setBairro(dto.getEndereco().getBairro());
-        l.setCidade(dto.getEndereco().getCidade());
-        l.setEstado(dto.getEndereco().getEstado());
-        l.setRua(dto.getEndereco().getRua());
-        l.setNumero(dto.getEndereco().getNumero());
-
-        Locais savedLocal = locaisRepository.save(l);
-
-        Estabelecimentos e = new Estabelecimentos();
-
-        e.setCategoria(c);
-        e.setLocal(savedLocal);
-        e.setDataCriacao(dto.getDataCriacao());
-        e.setNome(dto.getNome());
-        e.setDescricao(dto.getDescricao());
-        e.setTelefone(dto.getTelefone());
-        e.setLinkImg(dto.getLinkImg());
-        e.setSenha(dto.getSenha());
-
-        Estabelecimentos savedEstabelecimento = estabelecimentosRepository.save(e);
-
-        Usuarios u = usuariosRepository.findByEmail(dto.getUsuarioLogin());
-
-        if (dto.getHorarios() != null) {
-            for (HorariosCadastroDto hDto : dto.getHorarios()) {
-
-                Horarios h = new Horarios();
-                h.setEstabelecimento(savedEstabelecimento);
-                h.setDataFim(hDto.getDataFim());
-                h.setUsuario(u);
-                h.setDiaSemana(hDto.getDiaSemana());
-                h.setDataInicio(hDto.getDataInicio());
-                h.setStatusHorario(StatusHorario.LIVRE);
-                horariosRepository.save(h);
-            }
-        }
-
-        if (dto.getServicos() != null) {
-            for (ServicosDto sDto : dto.getServicos()) {
-                Servicos s = new Servicos();
-                s.setNome(sDto.getNome());
-                s.setDescricao(sDto.getDescricao());
-                s.getUsuarios().add(u);
-                s.setValor(sDto.getValor());
-                s.setQuantidadeDisponivel(sDto.getQuantidadeDisponivel());
-                e.getServicos().add(s);
-                servicosRepository.save(s);
-            }
-        }
-    }
-
-    public void deleteEstabelecimento(Long id){
-        Estabelecimentos e = estabelecimentosRepository.getReferenceById(id);
-        estabelecimentosRepository.delete(e);
-    }
-
-
-    public void associarUsuario(Long usuarioId, Long estabelecimentoId) {
-        Usuarios u = usuariosRepository.getReferenceById(usuarioId);
-        Estabelecimentos e = estabelecimentosRepository.getReferenceById(estabelecimentoId);
-
-        boolean jaTemGerente = e.getUsuarios().stream()
-                .anyMatch(user -> user.getFuncoes().contains(Funcoes.GERENTE));
-
-        // Cria uma nova lista mutável contendo CLIENTE sempre
-        Set<Funcoes> novasFuncoes = new HashSet<>();
-        novasFuncoes.add(Funcoes.CLIENTE);
-
-        if (!jaTemGerente) {
-            // [CLIENTE, FUNCIONARIO, GERENTE]
-            novasFuncoes.add(Funcoes.FUNCIONARIO);
-            novasFuncoes.add(Funcoes.GERENTE);
-        } else {
-            // [CLIENTE, FUNCIONARIO]
-            novasFuncoes.add(Funcoes.FUNCIONARIO);
-        }
-
-        // Substitui a lista (não tenta mutar a original)
-        u.setFuncoes(novasFuncoes);
-
-        // Associa o usuário ao estabelecimento (evita duplicata)
-        if (!e.getUsuarios().contains(u)) {
-            e.getUsuarios().add(u);
-        }
-
-        estabelecimentosRepository.save(e);
-    }
-
-
-    public void associarServicos(Long servicoId, Long estabelecimentoId){
-        Servicos s = servicosRepository.getReferenceById(servicoId);
-        Estabelecimentos e = estabelecimentosRepository.getReferenceById(estabelecimentoId);
-
-        e.getServicos().add(s);
-        estabelecimentosRepository.save(e);
-    }
-
 }

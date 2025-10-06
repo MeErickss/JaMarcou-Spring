@@ -1,10 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.CategoriasDto;
-import com.example.demo.model.Avaliacoes;
 import com.example.demo.model.Categorias;
-import com.example.demo.model.Estabelecimentos;
-import com.example.demo.model.Horarios;
 import com.example.demo.repository.CategoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

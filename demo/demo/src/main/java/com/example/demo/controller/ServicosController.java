@@ -24,24 +24,8 @@ public class ServicosController {
 
     // 🔹 Listar todos os serviços
     @GetMapping
-    public List<Servicos> listarTodos() {
+    public List<Servicos> listarServicos() {
         return servicosRepository.findAll();
     }
 
-    @PostMapping
-    public void cadastrarServicos(@RequestParam ServicosDto dto) {
-        servicosService.cadastrarServico(dto);
-    }
-
-    @PutMapping
-    public void atualizarServicos(@RequestParam ServicosDto dto){
-        servicosService.atualizarServico(dto);
-    }
-
-    // 🔹 Buscar serviço por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Servicos> buscarPorId(@PathVariable Long id) {
-        Optional<Servicos> servico = servicosRepository.findById(id);
-        return servico.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
 }

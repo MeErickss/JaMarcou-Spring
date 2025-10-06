@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.EnderecoDto;
-import com.example.demo.dto.HorariosDto;
 import com.example.demo.dto.LocaisDto;
 import com.example.demo.model.Locais;
 import com.example.demo.repository.LocaisRepository;

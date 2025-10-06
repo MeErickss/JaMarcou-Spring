@@ -3,10 +3,10 @@ package com.example.demo.service;
 import com.example.demo.dto.AvaliacoesDto;
 import com.example.demo.model.Avaliacoes;
 import com.example.demo.model.Estabelecimentos;
-import com.example.demo.model.Horarios;
+import com.example.demo.model.HorariosFuncionario;
 import com.example.demo.repository.AvaliacoesRepository;
 import com.example.demo.repository.EstabelecimentosRepository;
-import com.example.demo.repository.HorariosRepository;
+import com.example.demo.repository.HorariosFuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class AvaliacoesService {
     private AvaliacoesRepository avaliacoesRepository;
 
     @Autowired
-    private HorariosRepository horariosRepository;
+    private HorariosFuncionarioRepository horariosFuncionarioRepository;
 
     @Autowired
     private EstabelecimentosRepository estabelecimentosRepository;
@@ -37,7 +37,7 @@ public class AvaliacoesService {
 
     public void cadastrarAvaliacao(Float nota, Long estabelecimentoId, Long horarioId){
 
-        Horarios h = horariosRepository.getReferenceById(horarioId);
+        HorariosFuncionario h = horariosFuncionarioRepository.getReferenceById(horarioId);
 
         Estabelecimentos e = estabelecimentosRepository.getReferenceById(estabelecimentoId);
 
@@ -50,7 +50,7 @@ public class AvaliacoesService {
 
     public void cadastrarAvaliacao(AvaliacoesDto dto){
 
-        Horarios h = horariosRepository.getReferenceById(dto.getHorarioId());
+        HorariosFuncionario h = horariosFuncionarioRepository.getReferenceById(dto.getHorarioId());
 
         Estabelecimentos e = estabelecimentosRepository.getReferenceById(dto.getEstabelecimentoId());
 
@@ -65,7 +65,7 @@ public class AvaliacoesService {
 
         Avaliacoes a = avaliacoesRepository.getReferenceById(dto.getId());
 
-        Horarios h = horariosRepository.getReferenceById(dto.getHorarioId());
+        HorariosFuncionario h = horariosFuncionarioRepository.getReferenceById(dto.getHorarioId());
 
         Estabelecimentos e = estabelecimentosRepository.getReferenceById(dto.getEstabelecimentoId());
 

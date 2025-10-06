@@ -1,11 +1,9 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.Agendamentos;
+import com.example.demo.model.AgendamentosServico;
 import com.example.demo.model.enumeration.StatusHorario;
 
-import java.time.LocalDateTime;
-
-public class AgendamentosDto {
+public class AgendamentosServicoDto {
     private Long id;
     private Long servicoId;
     private Long estabelecimentoId;
@@ -15,9 +13,9 @@ public class AgendamentosDto {
     private String observacoes;
     private StatusHorario status;
 
-    public AgendamentosDto(){}
+    public AgendamentosServicoDto(){}
 
-    public AgendamentosDto(Long id, Long servicoId, Long estabelecimentoId, Long clienteId, Long funcionarioId, Long horarioId, String observacoes, StatusHorario status){
+    public AgendamentosServicoDto(Long id, Long servicoId, Long estabelecimentoId, Long clienteId, Long funcionarioId, Long horarioId, String observacoes, StatusHorario status){
         this.id = id;
         this.servicoId = servicoId;
         this.estabelecimentoId = estabelecimentoId;
@@ -28,7 +26,7 @@ public class AgendamentosDto {
         this.status = status;
     }
 
-    public AgendamentosDto(Agendamentos agendamento) {
+    public AgendamentosServicoDto(AgendamentosServico agendamento) {
         this.id = agendamento.getId();
         this.servicoId = agendamento.getServico() != null ? agendamento.getServico().getId() : null;
         this.estabelecimentoId = agendamento.getEstabelecimento() != null ? agendamento.getEstabelecimento().getId() : null;
@@ -36,7 +34,6 @@ public class AgendamentosDto {
         this.funcionarioId = agendamento.getFuncionario() != null ? agendamento.getFuncionario().getId() : null;
         this.horarioId = agendamento.getHorario() != null ? agendamento.getHorario().getId() : null;
         this.observacoes = agendamento.getObservacoes();
-        this.status = agendamento.getStatus();
     }
 
     // getters e setters
