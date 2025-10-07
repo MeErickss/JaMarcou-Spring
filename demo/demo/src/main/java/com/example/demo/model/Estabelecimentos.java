@@ -45,7 +45,6 @@ public class Estabelecimentos {
     @JoinColumn(name = "categoria_id", referencedColumnName = "id", nullable = false)
     private Categorias categoria;
 
-    // gerentes / funcionarios (mantidos)
     @OneToMany(mappedBy = "estabelecimento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "estabelecimento-gerentes")
     private Set<Gerentes> gerentes = new HashSet<>();
