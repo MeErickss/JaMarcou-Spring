@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.LoginDto;
+import com.example.demo.dto.LoginResponseDto;
 import com.example.demo.model.PessoaFisica;
 import com.example.demo.repository.PessoaFisicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class PessoaFisicaService {
 
     @Autowired
     private PessoaFisicaRepository pessoaFisicaRepository;
+
+    @Autowired
+    private LoginResponseDto loginResponseDto;
 
     private final PasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -44,7 +48,7 @@ public class PessoaFisicaService {
         return pessoaFisicaRepository.save(p);
     }
 
-    public String logar(LoginDto dto) {
+    public LoginResponseDto logar(LoginDto dto) {
         if (dto.getEmail() == null || dto.getEmail().isBlank()) {
             throw new IllegalArgumentException("Email obrigatório");
         }
@@ -61,7 +65,21 @@ public class PessoaFisicaService {
             throw new IllegalArgumentException("Senha inválida");
         }
 
-        return JwtService.gerarToken(p.getEmail());
+        // Detecta role (maneira simples)
+        String role = detectRole(p);
+
+        // Gera token com claim de role (ex.: JwtService.gerarToken(email, role))
+        String token = JwtService.gerarToken(p.getEmail());
+
+        return new LoginResponseDto(token, p.getId(), role);
+    }
+
+    private String detectRole(PessoaFisica p) {
+        // 1) verificação por instanceof (normalmente funciona quando JPA devolve a subclasse)
+        if (p instanceof com.example.demo.model.Clientes) return "CLIENTE";
+        if (p instanceof com.example.demo.model.Funcionarios) return "FUNCIONARIO";
+        if (p instanceof com.example.demo.model.Gerentes) return "GERENTE";
+        return "PESSOA";
     }
 
     public PessoaFisica validarToken(String token) {

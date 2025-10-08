@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.LoginDto;
+import com.example.demo.dto.LoginResponseDto;
 import com.example.demo.model.PessoaFisica;
 import com.example.demo.repository.PessoaFisicaRepository;
 import com.example.demo.service.PessoaFisicaService;
@@ -37,18 +38,15 @@ public class PessoaFisicaController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto dto) {
         try {
-            String token = pessoaFisicaService.logar(dto);
-
-            return ResponseEntity.ok(Map.of(
-                    "token", token,
-                    "mensagem", "Login realizado com sucesso"
-            ));
+            LoginResponseDto response = pessoaFisicaService.logar(dto);
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("erro", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(Map.of("erro", "Erro ao processar login"));
         }
     }
+    
 
     @GetMapping("/validar")
     public ResponseEntity<?> validarToken(@RequestHeader("Authorization") String authHeader) {

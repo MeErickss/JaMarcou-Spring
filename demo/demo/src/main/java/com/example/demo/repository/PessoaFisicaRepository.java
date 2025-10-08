@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PessoaFisicaRepository extends JpaRepository<PessoaFisica, Long> {
-
     PessoaFisica findByEmail(String email);
+    boolean existsByEmail(String email);
 
 }
