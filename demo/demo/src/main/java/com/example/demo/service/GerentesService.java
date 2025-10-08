@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,6 +17,8 @@ public class GerentesService {
 
     @Autowired
     private EstabelecimentosRepository estabelecimentosRepository;
+
+    private final PasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public Gerentes createGerente(String email,
                                   String nome,
@@ -35,7 +39,10 @@ public class GerentesService {
         g.setNome(nome);
         g.setSobrenome(sobrenome);
         g.setCpf(cpf);
-        g.setSenha(senha);
+
+        String hashed = encoder.encode(senha);
+
+        g.setSenha(hashed);
         g.setDataNascimento(dataNascimento);
         g.setLinkImagem(linkImg);
         g.setStatusUsuario(statusUsuario);

@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,6 +17,8 @@ public class FuncionariosService {
 
     @Autowired
     private EstabelecimentosRepository estabelecimentosRepository;
+
+    private final PasswordEncoder encoder = new BCryptPasswordEncoder();
 
     /**
      * Cria novo Funcionarios (dados pessoais + vínculo com estabelecimento + datas contrato).
@@ -41,7 +45,10 @@ public class FuncionariosService {
         f.setNome(nome);
         f.setSobrenome(sobrenome);
         f.setCpf(cpf);
-        f.setSenha(senha);
+
+        String hashed = encoder.encode(senha);
+
+        f.setSenha(hashed);
         f.setDataNascimento(dataNascimento);
         f.setLinkImagem(linkImg);
         f.setStatusUsuario(statusUsuario);

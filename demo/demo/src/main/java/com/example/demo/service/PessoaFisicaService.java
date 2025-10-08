@@ -17,9 +17,6 @@ public class PessoaFisicaService {
     @Autowired
     private PessoaFisicaRepository pessoaFisicaRepository;
 
-    @Autowired
-    private LoginResponseDto loginResponseDto;
-
     private final PasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public PessoaFisica createPessoaFisica(String email,
@@ -62,7 +59,7 @@ public class PessoaFisicaService {
         }
 
         if (!encoder.matches(dto.getSenha(), p.getSenha())) {
-            throw new IllegalArgumentException("Senha inválida");
+            throw new IllegalArgumentException(dto.getSenha() + "Senha inválida" + p.getSenha());
         }
 
         // Detecta role (maneira simples)
