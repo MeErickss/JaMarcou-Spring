@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.LoginDto;
 import com.example.demo.model.PessoaFisica;
 import com.example.demo.repository.PessoaFisicaRepository;
 import com.example.demo.service.PessoaFisicaService;
@@ -34,12 +35,9 @@ public class PessoaFisicaController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> credenciais) {
+    public ResponseEntity<?> login(@RequestBody LoginDto dto) {
         try {
-            String email = credenciais.get("email");
-            String senha = credenciais.get("senha");
-
-            String token = pessoaFisicaService.logar(email, senha);
+            String token = pessoaFisicaService.logar(dto);
 
             return ResponseEntity.ok(Map.of(
                     "token", token,

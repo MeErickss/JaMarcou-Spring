@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.LoginDto;
 import com.example.demo.model.PessoaFisica;
 import com.example.demo.repository.PessoaFisicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,20 +44,20 @@ public class PessoaFisicaService {
         return pessoaFisicaRepository.save(p);
     }
 
-    public String logar(String email, String senha) {
-        if (email == null || email.isBlank()) {
+    public String logar(LoginDto dto) {
+        if (dto.getEmail() == null || dto.getEmail().isBlank()) {
             throw new IllegalArgumentException("Email obrigatório");
         }
-        if (senha == null) {
+        if (dto.getSenha() == null) {
             throw new IllegalArgumentException("Senha obrigatória");
         }
 
-        PessoaFisica p = pessoaFisicaRepository.findByEmail(email);
+        PessoaFisica p = pessoaFisicaRepository.findByEmail(dto.getEmail());
         if (p == null) {
             throw new IllegalArgumentException("Usuário não encontrado para o email informado");
         }
 
-        if (!encoder.matches(senha, p.getSenha())) {
+        if (!encoder.matches(dto.getSenha(), p.getSenha())) {
             throw new IllegalArgumentException("Senha inválida");
         }
 
