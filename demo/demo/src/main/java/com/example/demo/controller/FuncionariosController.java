@@ -51,6 +51,17 @@ public class FuncionariosController {
         return ResponseEntity.ok(funcionarios);
     }
 
+    @GetMapping("/gerentes/{gerenteId}/funcionarios")
+    public ResponseEntity<List<Funcionarios>> listarFuncionariosPorGerente(@PathVariable Long gerenteId) {
+        List<Funcionarios> funcionarios = funcionariosRepository.findAllByGerenteEstabelecimento(gerenteId);
+
+        if (funcionarios == null || funcionarios.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(funcionarios);
+    }
+
     @GetMapping("/{id}/raw")
     public ResponseEntity<Funcionarios> getFuncionariosRaw(@PathVariable Long id) {
         Optional<Funcionarios> funcionariosOpt = funcionariosRepository.findBasicById(id);

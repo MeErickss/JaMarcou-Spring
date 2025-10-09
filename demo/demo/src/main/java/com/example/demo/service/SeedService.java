@@ -110,11 +110,11 @@ public class SeedService implements ApplicationRunner {
 
         // ===== ESTABELECIMENTOS =====
         // createEstabelecimento(Long categoriaId, Long localId, String nome, String cnpj, OffsetDateTime dataCriacao, String senha, String telefone, String linkImg, String descricao)
-        estabelecimentosService.createEstabelecimento(estetica.getId(), 1L, "Barber Shop", "11111111111111", OffsetDateTime.now(), "123456", "44 99809-1064", "https://via.placeholder.com/300", "Barbearia local");
-        estabelecimentosService.createEstabelecimento(estetica.getId(), 2L, "Beauty Salon", "22222222222222", OffsetDateTime.now(), "123456", "44 99809-1065", "https://via.placeholder.com/300", "Salão de beleza");
-        estabelecimentosService.createEstabelecimento(estetica.getId(), 3L, "Spa Facial", "33333333333333", OffsetDateTime.now(), "123456", "44 99809-1066", "https://via.placeholder.com/300", "Spa Facial");
-        estabelecimentosService.createEstabelecimento(saude.getId(), 4L, "Clínica Corpo & Saúde", "44444444444444", OffsetDateTime.now(), "123456", "44 99809-1067", "https://via.placeholder.com/300", "Clínica");
-        estabelecimentosService.createEstabelecimento(outros.getId(), 5L, "Massagens Relax", "55555555555555", OffsetDateTime.now(), "123456", "44 99809-1068", "https://via.placeholder.com/300", "Massoterapia");
+        estabelecimentosService.createEstabelecimento(estetica.getId(), 1L, "Barber Shop", "11111111111111", OffsetDateTime.now(), "123456", "44 99809-1064", "https://thebarbersonline.com/wp-content/uploads/2019/03/IMG_0216-1.jpg", "Barbearia local");
+        estabelecimentosService.createEstabelecimento(estetica.getId(), 2L, "Beauty Salon", "22222222222222", OffsetDateTime.now(), "123456", "44 99809-1065", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNvSVGhi22rBuYde6KyjpiwDKQXeXq1rfTaw&s", "Salão de beleza");
+        estabelecimentosService.createEstabelecimento(estetica.getId(), 3L, "Spa Facial", "33333333333333", OffsetDateTime.now(), "123456", "44 99809-1066", "https://cdn.awsli.com.br/2500x2500/1697/1697589/produto/79094733/b2cbe15641.jpg", "Spa Facial");
+        estabelecimentosService.createEstabelecimento(saude.getId(), 4L, "Clínica Corpo & Saúde", "44444444444444", OffsetDateTime.now(), "123456", "44 99809-1067", "https://codigomed.com/wp-content/uploads/2017/03/estrutura-clinica.jpg", "Clínica");
+        estabelecimentosService.createEstabelecimento(outros.getId(), 5L, "Massagens Relax", "55555555555555", OffsetDateTime.now(), "123456", "44 99809-1068", "https://fly.metroimg.com/upload/q_85,w_700/https://uploads.metroimg.com/wp-content/uploads/2018/05/10155627/massagem.jpg", "Massoterapia");
 
         // ===== USUÁRIOS (CLIENTES) =====
         // createCliente(email, nome, sobrenome, cpf, senha, dataNascimento, linkImg, statusUsuario)

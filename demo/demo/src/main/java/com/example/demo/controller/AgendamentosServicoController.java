@@ -61,6 +61,13 @@ public class AgendamentosServicoController {
         return ResponseEntity.ok(agendamentosServico);
     }
 
+    @GetMapping("/gerente/{gerenteId}/agendamentos")
+    public ResponseEntity<List<AgendamentosServico>> listarPorGerente(@PathVariable Long gerenteId) {
+        List<AgendamentosServico> lista = agendamentosServicoRepository.findAllByGerenteEstabelecimento(gerenteId);
+        if (lista.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(lista);
+    }
+
     @GetMapping("/{id}/raw")
     public ResponseEntity<AgendamentosServico> getAgendamentoServicoRaw(@PathVariable Long id) {
         Optional<AgendamentosServico> agendamentoOpt = agendamentosServicoRepository.findBasicById(id);

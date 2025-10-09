@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface FuncionariosRepository extends JpaRepository<Funcionarios, Long> {
     List<Funcionarios> findByEstabelecimento(Estabelecimentos estabelecimentos);
+
     @Query("""
     SELECT s.prestador 
     FROM Servicos s
@@ -20,10 +21,21 @@ public interface FuncionariosRepository extends JpaRepository<Funcionarios, Long
     WHERE a.id = :agendamentoServicoId
 """)
     Funcionarios findFuncionarioByAgendamentoServico(@Param("agendamentoServicoId") Long agendamentoServicoId);
+
     List<Funcionarios> findByHorariosFuncionario(HorariosFuncionario horariosFuncionario);
     @Query("SELECT s.prestador FROM Servicos s WHERE s.id = :servicoId")
     List<Funcionarios> findFuncionariosByServicosId(@Param("servicoId") Long servicoId);
 
+    @Query("""
+        select distinct f
+        from Funcionarios f
+        join fetch f.estabelecimento e
+        left join fetch f.horarios h
+        where e.id = (
+          select g.estabelecimento.id from Gerentes g where g.id = :gerenteId
+        )
+        """)
+    List<Funcionarios> findAllByGerenteEstabelecimento(@Param("gerenteId") Long gerenteId);
 
     @Query("select f.dataInicioContrato, f.dataFimContrato from Funcionarios f where f.id = :id")
     Optional<Object[]> findContractDatesById(@Param("id") Long id);

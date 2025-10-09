@@ -15,6 +15,20 @@ import java.util.Optional;
 
 @Repository
 public interface AgendamentosServicoRepository extends JpaRepository<AgendamentosServico, Long> {
+
+    @Query("""
+        select a 
+        from AgendamentosServico a
+        join fetch a.estabelecimento e
+        left join fetch a.cliente c
+        left join fetch a.funcionario f
+        left join fetch a.horario h
+        where e.id = (
+           select g.estabelecimento.id from Gerentes g where g.id = :gerenteId
+        )
+        """)
+    List<AgendamentosServico> findAllByGerenteEstabelecimento(@Param("gerenteId") Long gerenteId);
+
     List<AgendamentosServico> findByCliente(Clientes clientes);
 
     @EntityGraph(attributePaths = {}) // não carrega nenhuma relação
